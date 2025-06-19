@@ -1,0 +1,51 @@
+<div class="py-2">
+  <div *ngFor="let node of fileStructure">
+    <ng-container
+      [ngTemplateOutlet]="nodeTemplate"
+      [ngTemplateOutletContext]="{node: node, depth: 0}"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #nodeTemplate let-node="node" let-depth="depth">
+  <div>
+    <div
+      [class]="getNodeClasses(node)"
+      [style.padding-left.px]="depth * 20 + 8"
+      (click)="handleNodeClick(node)"
+      tabindex="0"
+      role="button"
+      [attr.aria-label]="'Abrir ' + node.name"
+      (keydown.enter)="handleNodeClick(node)"
+      (keydown.space)="handleNodeClick(node)"
+    >
+      <div *ngIf="node.type === 'folder'" class="mr-1">
+        <lucide-icon
+          [img]="isExpanded(node.path) ? ChevronDownIcon : ChevronRightIcon"
+          size="12"
+          class="text-gray-400"
+        >
+        </lucide-icon>
+      </div>
+      <div [class]="node.type === 'file' ? 'ml-3 mr-2' : 'mr-2'">
+        <lucide-icon
+          [img]="getFileIcon(node.name, node.type)"
+          size="16"
+          [class]="getIconClass(node.name, node.type)"
+        ></lucide-icon>
+      </div>
+      <span [class]="getTextClasses(node)"> {{ node.name }} </span>
+    </div>
+
+    <div
+      *ngIf="node.type === 'folder' && isExpanded(node.path) && node.children"
+    >
+      <ng-container *ngFor="let child of node.children">
+        <ng-container
+          [ngTemplateOutlet]="nodeTemplate"
+          [ngTemplateOutletContext]="{node: child, depth: depth + 1}"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

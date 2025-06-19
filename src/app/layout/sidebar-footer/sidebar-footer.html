@@ -1,0 +1,18 @@
+<div [class]="getFooterClasses()">
+  <!-- Theme Switcher -->
+  <button
+    (click)="themeToggled.emit()"
+    [class]="getThemeButtonClasses()"
+    [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+  >
+    <lucide-icon
+      [img]="isDarkTheme ? SunIcon : MoonIcon"
+      size="18"
+    ></lucide-icon>
+  </button>
+
+  <!-- Auth Avatar Placeholder -->
+  <button [class]="getAvatarButtonClasses()" title="User profile">
+    <lucide-icon [img]="UserIcon" size="18"></lucide-icon>
+  </button>
+</div>

@@ -1,1 +1,91 @@
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
+<div
+  [class]="themeClass + ' h-screen flex flex-col transition-colors duration-300'"
+>
+  <!-- Mobile Header -->
+  <div
+    class="md:hidden border-b border-opacity-20 p-4 flex items-center justify-between"
+    [class.border-gray-800]="isDarkTheme"
+    [class.border-gray-300]="!isDarkTheme"
+  >
+    <button
+      *ngIf="sidebarOpen"
+      class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+      (click)="closeSidebar()"
+      tabindex="0"
+      role="button"
+      aria-label="Fechar menu lateral"
+      (keydown.enter)="closeSidebar()"
+      (keydown.space)="closeSidebar()"
+    >
+      <lucide-icon
+        [img]="sidebarOpen ? XIcon : MenuIcon"
+        size="24"
+      ></lucide-icon>
+    </button>
+    <div class="text-sm font-mono opacity-75">{{ activeFile }}</div>
+  </div>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <div [class]="sidebarClasses">
+      <div class="h-full flex flex-col">
+        <!-- Explorer Header -->
+        <div
+          class="p-4 border-b border-opacity-20 flex-shrink-0"
+          [class.border-gray-800]="isDarkTheme"
+          [class.border-gray-300]="!isDarkTheme"
+        >
+          <h2 class="text-sm font-semibold opacity-75 uppercase tracking-wider">
+            Explorer
+          </h2>
+        </div>
+
+        <!-- File Tree -->
+        <div class="flex-1 overflow-y-auto">
+          <app-file-tree
+            [activeFile]="activeFile"
+            [isDarkTheme]="isDarkTheme"
+            (fileSelected)="handleFileSelect($event)"
+          >
+          </app-file-tree>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <app-sidebar-footer
+          [isDarkTheme]="isDarkTheme"
+          (themeToggled)="toggleTheme()"
+        >
+        </app-sidebar-footer>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Tab Bar -->
+      <app-tab-bar
+        [tabs]="openTabs"
+        [activeTab]="activeFile"
+        [isDarkTheme]="isDarkTheme"
+        (tabSelected)="setActiveFile($event)"
+        (tabClosed)="handleTabClose($event)"
+      >
+      </app-tab-bar>
+
+      <!-- Editor Area -->
+      <app-editor-area [activeFile]="activeFile" [isDarkTheme]="isDarkTheme">
+      </app-editor-area>
+    </div>
+  </div>
+
+  <!-- Mobile Overlay -->
+  <div
+    *ngIf="sidebarOpen"
+    class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+    (click)="closeSidebar()"
+    tabindex="0"
+    role="button"
+    aria-label="Fechar menu lateral"
+    (keydown.enter)="closeSidebar()"
+    (keydown.space)="closeSidebar()"
+  ></div>
+</div>
