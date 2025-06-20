@@ -8,14 +8,11 @@
     [class.border-gray-300]="!isDarkTheme"
   >
     <button
-      *ngIf="sidebarOpen"
-      class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-      (click)="closeSidebar()"
+      (click)="toggleSidebar()"
+      class="md:hidden p-2"
       tabindex="0"
       role="button"
-      aria-label="Fechar menu lateral"
-      (keydown.enter)="closeSidebar()"
-      (keydown.space)="closeSidebar()"
+      aria-label="Toggle sidebar"
     >
       <lucide-icon
         [img]="sidebarOpen ? XIcon : MenuIcon"
@@ -71,12 +68,10 @@
       >
       </app-layout-tab-bar>
 
-      <!-- Editor Area -->
-      <app-layout-editor-area
-        [activeFile]="activeFile"
-        [isDarkTheme]="isDarkTheme"
-      >
-      </app-layout-editor-area>
+      <!-- Router Outlet - This is where the pages will be displayed -->
+      <div class="flex-1 overflow-hidden">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 
@@ -87,7 +82,7 @@
     (click)="closeSidebar()"
     tabindex="0"
     role="button"
-    aria-label="Fechar menu lateral"
+    aria-label="Close sidebar"
     (keydown.enter)="closeSidebar()"
     (keydown.space)="closeSidebar()"
   ></div>

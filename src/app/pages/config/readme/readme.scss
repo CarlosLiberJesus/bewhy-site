@@ -1,0 +1,22 @@
+/* README specific styles */
+.command-block {
+  @apply transition-all duration-200 hover:bg-blue-200 dark:hover:bg-blue-700;
+}
+
+.prose {
+  @apply text-gray-800 dark:text-gray-200;
+}
+
+.prose pre {
+  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
+}
+
+.prose code {
+  @apply bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  @apply text-gray-900 dark:text-white;
+}

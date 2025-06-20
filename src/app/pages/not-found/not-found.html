@@ -1,0 +1,50 @@
+<div class="h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+  <div class="text-center p-8">
+    <div class="mb-6">
+      <lucide-icon
+        [img]="AlertTriangleIcon"
+        size="64"
+        class="text-yellow-500 mx-auto mb-4"
+      ></lucide-icon>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+        404
+      </h1>
+      <h2 class="text-xl text-gray-600 dark:text-gray-400 mb-4">
+        File Not Found
+      </h2>
+      <p class="text-gray-500 dark:text-gray-500 mb-8 max-w-md">
+        The file you're looking for doesn't exist in this project structure.
+        It might have been moved, deleted, or you may have mistyped the path.
+      </p>
+    </div>
+
+    <div class="space-y-3">
+      <button
+        routerLink="/projects/moodle-agent/moodle-chat"
+        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+      >
+        <lucide-icon [img]="HomeIcon" size="16" class="mr-2"></lucide-icon>
+        Go to Home
+      </button>
+      
+      <div class="text-sm text-gray-500 dark:text-gray-400">
+        or
+      </div>
+      
+      <button
+        onclick="history.back()"
+        class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+      >
+        <lucide-icon [img]="ArrowLeftIcon" size="16" class="mr-2"></lucide-icon>
+        Go Back
+      </button>
+    </div>
+
+    <div class="mt-8 p-4 bg-yellow-50 dark:bg-yellow-900 rounded-lg">
+      <p class="text-sm text-yellow-800 dark:text-yellow-200">
+        <strong>Tip:</strong> Use the file tree on the left to navigate to available files,
+        or check if all tabs are closed to see this message.
+      </p>
+    </div>
+  </div>
+</div>

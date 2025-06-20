@@ -1,0 +1,95 @@
+<div class="h-full flex flex-col bg-gray-50 dark:bg-gray-900">
+  <!-- Header -->
+  <div
+    class="border-b border-gray-200 dark:border-gray-700 p-4 flex items-center"
+  >
+    <lucide-icon
+      [img]="PackageIcon"
+      size="20"
+      class="text-green-500 mr-3"
+    ></lucide-icon>
+    <div>
+      <h1 class="text-lg font-semibold text-gray-900 dark:text-white">
+        package.json
+      </h1>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Project configuration and dependencies
+      </p>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-hidden flex">
+    <!-- JSON Editor Section -->
+    <div class="flex-1 flex flex-col">
+      <div class="border-b border-gray-200 dark:border-gray-700 p-2">
+        <span class="text-sm font-mono text-gray-600 dark:text-gray-400"
+          >JSON Editor</span
+        >
+      </div>
+      <div class="flex-1 overflow-auto">
+        <pre
+          class="p-4 text-sm font-mono text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
+        ><code>{{ packageContent }}</code></pre>
+      </div>
+    </div>
+
+    <!-- Dependencies Info -->
+    <div class="w-80 border-l border-gray-200 dark:border-gray-700 flex flex-col">
+      <div class="border-b border-gray-200 dark:border-gray-700 p-2">
+        <span class="text-sm font-mono text-gray-600 dark:text-gray-400"
+          >Key Dependencies</span
+        >
+      </div>
+      <div class="flex-1 overflow-auto p-4 space-y-3">
+        <div
+          *ngFor="let dep of dependencies"
+          class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+              {{ dep.name }}
+            </h3>
+            <span
+              class="px-2 py-1 text-xs rounded-full"
+              [class]="
+                dep.type === 'framework'
+                  ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                  : dep.type === 'styling'
+                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                    : dep.type === 'icons'
+                      ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+              "
+            >
+              {{ dep.type }}
+            </span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 font-mono">
+            {{ dep.version }}
+          </p>
+        </div>
+
+        <!-- Project Stats -->
+        <div class="mt-6 p-3 bg-green-50 dark:bg-green-900 rounded-lg">
+          <div class="flex items-center mb-2">
+            <lucide-icon
+              [img]="SettingsIcon"
+              size="16"
+              class="text-green-500 mr-2"
+            ></lucide-icon>
+            <span
+              class="text-sm font-semibold text-green-900 dark:text-green-100"
+              >Project Stats</span
+            >
+          </div>
+          <div class="text-xs text-green-700 dark:text-green-200 space-y-1">
+            <div>Dependencies: 9</div>
+            <div>Dev Dependencies: 18</div>
+            <div>Scripts: 8</div>
+            <div>Angular Version: 20.0.0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

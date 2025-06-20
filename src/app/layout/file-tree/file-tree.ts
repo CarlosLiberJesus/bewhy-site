@@ -30,7 +30,11 @@ export class LayoutFileTree {
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();
 
-  expandedFolders = new Set(["src", "src/app", "src/app/components"]);
+  expandedFolders = new Set([
+    "projects",
+    "projects/moodle-agent",
+    "config",
+  ]);
 
   readonly FolderIcon = Folder;
   readonly FolderOpenIcon = FolderOpen;
@@ -42,69 +46,51 @@ export class LayoutFileTree {
 
   fileStructure: FileNode[] = [
     {
-      name: "src",
+      name: "projects",
       type: "folder",
-      path: "src",
+      path: "projects",
       children: [
         {
-          name: "app",
+          name: "moodle-agent",
           type: "folder",
-          path: "src/app",
+          path: "projects/moodle-agent",
           children: [
             {
-              name: "components",
-              type: "folder",
-              path: "src/app/components",
-              children: [
-                {
-                  name: "file-tree",
-                  type: "folder",
-                  path: "src/app/components/file-tree",
-                },
-                {
-                  name: "tab-bar",
-                  type: "folder",
-                  path: "src/app/components/tab-bar",
-                },
-                {
-                  name: "editor-area",
-                  type: "folder",
-                  path: "src/app/components/editor-area",
-                },
-                {
-                  name: "sidebar-footer",
-                  type: "folder",
-                  path: "src/app/components/sidebar-footer",
-                },
-              ],
+              name: "MoodleChat.py",
+              type: "file",
+              path: "/projects/moodle-agent/moodle-chat",
             },
             {
-              name: "app.component.ts",
+              name: "MoodleLangChain.py",
               type: "file",
-              path: "src/app/app.component.ts",
+              path: "/projects/moodle-agent/moodle-langchain",
             },
             {
-              name: "app.component.html",
+              name: "MoodleMcp.py",
               type: "file",
-              path: "src/app/app.component.html",
-            },
-            {
-              name: "app.component.css",
-              type: "file",
-              path: "src/app/app.component.css",
+              path: "/projects/moodle-agent/moodle-mcp",
             },
           ],
         },
-        { name: "main.ts", type: "file", path: "src/main.ts" },
-        { name: "styles.css", type: "file", path: "src/styles.css" },
-        { name: "index.html", type: "file", path: "src/index.html" },
       ],
     },
-    { name: "package.json", type: "file", path: "package.json" },
-    { name: "angular.json", type: "file", path: "angular.json" },
-    { name: "tsconfig.json", type: "file", path: "tsconfig.json" },
-    { name: "tailwind.config.js", type: "file", path: "tailwind.config.js" },
-    { name: "README.md", type: "file", path: "README.md" },
+    {
+      name: "config",
+      type: "folder",
+      path: "config",
+      children: [
+        {
+          name: "package.json",
+          type: "file",
+          path: "/config/package-json",
+        },
+        {
+          name: "README.md",
+          type: "file",
+          path: "/config/readme",
+        },
+      ],
+    },
   ];
 
   isExpanded(path: string): boolean {
@@ -118,6 +104,7 @@ export class LayoutFileTree {
 
     const extension = fileName.split(".").pop()?.toLowerCase();
     switch (extension) {
+      case "py":
       case "ts":
       case "js":
       case "jsx":
@@ -140,6 +127,8 @@ export class LayoutFileTree {
 
     const extension = fileName.split(".").pop()?.toLowerCase();
     switch (extension) {
+      case "py":
+        return "text-green-400";
       case "ts":
       case "js":
       case "jsx":
