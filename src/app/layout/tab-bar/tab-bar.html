@@ -1,0 +1,25 @@
+<div [class]="getTabBarClasses()">
+  <div *ngFor="let tab of tabs" [class]="getTabClasses(tab)">
+    <button
+      (click)="tabSelected.emit(tab)"
+      class="flex items-center px-4 py-3 min-w-0 flex-1"
+    >
+      <div class="mr-2 flex-shrink-0">
+        <lucide-icon
+          [img]="getFileIcon(tab)"
+          size="14"
+          [class]="getIconClass(tab)"
+        ></lucide-icon>
+      </div>
+      <span [class]="getTabTextClasses(tab)"> {{ getFileName(tab) }} </span>
+    </button>
+
+    <button
+      *ngIf="tabs.length > 1"
+      (click)="tabClosed.emit(tab)"
+      [class]="getCloseButtonClasses()"
+    >
+      <lucide-icon [img]="XIcon" size="12"></lucide-icon>
+    </button>
+  </div>
+</div>
