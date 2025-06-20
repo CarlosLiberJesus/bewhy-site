@@ -42,38 +42,41 @@
 
         <!-- File Tree -->
         <div class="flex-1 overflow-y-auto">
-          <app-file-tree
+          <app-layout-file-tree
             [activeFile]="activeFile"
             [isDarkTheme]="isDarkTheme"
             (fileSelected)="handleFileSelect($event)"
           >
-          </app-file-tree>
+          </app-layout-file-tree>
         </div>
 
         <!-- Sidebar Footer -->
-        <app-sidebar-footer
+        <app-layout-sidebar-footer
           [isDarkTheme]="isDarkTheme"
           (themeToggled)="toggleTheme()"
         >
-        </app-sidebar-footer>
+        </app-layout-sidebar-footer>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Tab Bar -->
-      <app-tab-bar
+      <app-layout-tab-bar
         [tabs]="openTabs"
         [activeTab]="activeFile"
         [isDarkTheme]="isDarkTheme"
         (tabSelected)="setActiveFile($event)"
         (tabClosed)="handleTabClose($event)"
       >
-      </app-tab-bar>
+      </app-layout-tab-bar>
 
       <!-- Editor Area -->
-      <app-editor-area [activeFile]="activeFile" [isDarkTheme]="isDarkTheme">
-      </app-editor-area>
+      <app-layout-editor-area
+        [activeFile]="activeFile"
+        [isDarkTheme]="isDarkTheme"
+      >
+      </app-layout-editor-area>
     </div>
   </div>
 

@@ -19,13 +19,13 @@ interface FileNode {
 }
 
 @Component({
-  selector: "app-file-tree",
+  selector: "app-layout-file-tree",
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: "./file-tree.html",
   styleUrl: "./file-tree.scss",
 })
-export class FileTree {
+export class LayoutFileTree {
   @Input() activeFile = "";
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();

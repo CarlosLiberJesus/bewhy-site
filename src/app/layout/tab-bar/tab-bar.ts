@@ -9,13 +9,13 @@ import {
 } from "lucide-angular";
 
 @Component({
-  selector: "app-tab-bar",
+  selector: "app-layout-tab-bar",
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: "./tab-bar.html",
   styleUrl: "./tab-bar.scss",
 })
-export class TabBar {
+export class LayoutTabBar {
   @Input() tabs: string[] = [];
   @Input() activeTab = "";
   @Input() isDarkTheme = true;

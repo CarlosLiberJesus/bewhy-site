@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Menu, X } from "lucide-angular";
-import { EditorArea } from "./layout/editor-area/editor-area";
-import { FileTree } from "./layout/file-tree/file-tree";
-import { SidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
-import { TabBar } from "./layout/tab-bar/tab-bar";
+import { LayoutEditorArea } from "./layout/editor-area/editor-area";
+import { LayoutFileTree } from "./layout/file-tree/file-tree";
+import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
+import { LayoutTabBar } from "./layout/tab-bar/tab-bar";
 
 @Component({
   selector: "app-root",
@@ -13,10 +13,10 @@ import { TabBar } from "./layout/tab-bar/tab-bar";
     RouterOutlet,
     CommonModule,
     LucideAngularModule,
-    FileTree,
-    TabBar,
-    EditorArea,
-    SidebarFooter,
+    LayoutFileTree,
+    LayoutTabBar,
+    LayoutEditorArea,
+    LayoutSidebarFooter,
   ],
   templateUrl: "./app.html",
   styleUrl: "./app.scss",

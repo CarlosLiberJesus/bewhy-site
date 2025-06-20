@@ -3,13 +3,13 @@ import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Sun, Moon, User } from "lucide-angular";
 
 @Component({
-  selector: "app-sidebar-footer",
+  selector: "app-layout-sidebar-footer",
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: "./sidebar-footer.html",
   styleUrl: "./sidebar-footer.scss",
 })
-export class SidebarFooter {
+export class LayoutSidebarFooter {
   @Input() isDarkTheme = true;
   @Output() themeToggled = new EventEmitter<void>();
 

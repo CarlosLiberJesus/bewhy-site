@@ -8,13 +8,13 @@ import {
 } from "lucide-angular";
 
 @Component({
-  selector: "app-editor-area",
+  selector: "app-layout-editor-area",
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: "./editor-area.html",
   styleUrl: "./editor-area.scss",
 })
-export class EditorArea {
+export class LayoutEditorArea {
   @Input() activeFile = "";
   @Input() isDarkTheme = true;
 
