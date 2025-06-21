@@ -1,59 +1,95 @@
-# bewhy-site
-Primeiro front.end em Tailwind....
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.2.
+# BeWhyOrg 🇵🇹
 
-## Development server
+Primeiro front-end em Tailwind CSS - Projeto desenvolvido em **português**.
 
-To start a local development server, run:
+## 🚀 Sobre o Projeto
 
-```bash
-ng serve
+Este é um projeto Angular moderno que simula um IDE/editor de código, desenvolvido inteiramente em português. O projeto apresenta uma estrutura organizada com diferentes secções para projetos de IA, aplicações web e páginas públicas.
+
+## 📋 Características
+
+- ✅ Interface em **português**
+- ✅ Tema escuro/claro
+- ✅ Navegação por tabs
+- ✅ Estrutura de ficheiros simulada
+- ✅ Routing Angular moderno
+- ✅ Design responsivo com Tailwind CSS
+
+## 🏗️ Estrutura do Projeto
+
+```
+src/app/
+├── layout/              # Componentes de layout
+│   ├── file-tree/       # Árvore de ficheiros
+│   ├── tab-bar/         # Barra de tabs
+│   ├── sidebar-footer/  # Rodapé da sidebar
+│   └── system-messages/ # Mensagens do sistema
+├── pages/               # Páginas da aplicação
+│   ├── src/
+│   │   ├── webapp/      # Aplicações web
+│   │   └── ai-agents/   # Agentes de IA
+│   └── public/          # Páginas públicas
+└── services/            # Serviços Angular
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🛠️ Tecnologias
 
-## Code scaffolding
+- **Angular 20** (Standalone Components)
+- **Tailwind CSS** com Fluid Tailwind
+- **Lucide Angular** (Ícones)
+- **TypeScript** (Strict Mode)
+- **SCSS** para estilos customizados
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Como Executar
 
 ```bash
-ng generate --help
+# Instalar dependências
+npm install
+
+# Executar em desenvolvimento
+npm start
+
+# Build para produção
+npm run build
 ```
 
-## Building
+## 📖 Desenvolvimento
 
-To build the project run:
+### ⚠️ IMPORTANTE para Contribuidores/IAs
 
-```bash
-ng build
-```
+**LEIA SEMPRE** o ficheiro `CONTRIBUTING.md` antes de fazer alterações!
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Regras Fundamentais:
+1. 🇵🇹 **Manter português** em toda a interface
+2. 🏗️ **Preservar estrutura** existente
+3. 🎯 **Mudanças mínimas** - apenas o solicitado
+4. ❓ **Perguntar** antes de grandes alterações
 
-## Running unit tests
+## 📁 Páginas Principais
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **src/web-app/index-angular** - Página inicial Angular
+- **src/web-app/laravel-php** - Projeto Laravel
+- **src/ai-agent/site-bot** - Bot do site
+- **src/ai-agent/moodle-agent/** - Agentes Moodle
+  - moodle-chat
+  - moodle-langchain  
+  - moodle-mcp
+- **public/sobre-org** - Sobre a organização
+- **public/contacte-nos** - Contactos
 
-```bash
-ng test
-```
+## 🎨 Design
 
-## Running end-to-end tests
+O projeto utiliza um design moderno inspirado em IDEs como VS Code, com:
+- Sidebar com árvore de ficheiros
+- Sistema de tabs
+- Tema escuro/claro
+- Layout responsivo
+- Micro-interações
 
-For end-to-end (e2e) testing, run:
+## 📄 Licença
 
-```bash
-ng e2e
-```
+GNU General Public License v3.0
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Desenvolvido com ❤️ em português para a comunidade BeWhyOrg**
