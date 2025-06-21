@@ -30,11 +30,7 @@ export class LayoutFileTree {
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();
 
-  expandedFolders = new Set([
-    "projects",
-    "projects/moodle-agent",
-    "config",
-  ]);
+  expandedFolders = new Set(["src", "src/web-app"]);
 
   readonly FolderIcon = Folder;
   readonly FolderOpenIcon = FolderOpen;
@@ -46,51 +42,70 @@ export class LayoutFileTree {
 
   fileStructure: FileNode[] = [
     {
-      name: "projects",
+      name: "src",
       type: "folder",
-      path: "projects",
+      path: "src",
       children: [
         {
-          name: "moodle-agent",
+          name: "web-app",
           type: "folder",
-          path: "projects/moodle-agent",
+          path: "src/web-app",
           children: [
             {
-              name: "MoodleChat.py",
+              name: "index.angular",
               type: "file",
-              path: "/projects/moodle-agent/moodle-chat",
+              path: "src/web-app/index-angular",
             },
             {
-              name: "MoodleLangChain.py",
+              name: "laravel.php",
               type: "file",
-              path: "/projects/moodle-agent/moodle-langchain",
+              path: "src/web-app/laravel-php",
             },
+          ],
+        },
+        {
+          name: "ai-agent",
+          type: "folder",
+          path: "src/ai-agent",
+          children: [
             {
-              name: "MoodleMcp.py",
-              type: "file",
-              path: "/projects/moodle-agent/moodle-mcp",
+              name: "moodle-agent",
+              type: "folder",
+              path: "src/moodle-agent",
+              children: [
+                {
+                  name: "moodle.chat",
+                  type: "file",
+                  path: "src/ai-agent/moodle-agent/moodle-chat",
+                },
+                {
+                  name: "moodle.langchain",
+                  type: "file",
+                  path: "src/ai-agent/moodle-agent/moodle-langchain",
+                },
+                {
+                  name: "moodle.mcp",
+                  type: "file",
+                  path: "src/ai-agent/moodle-agent/moodle-mcp",
+                },
+              ],
             },
+            { name: "site.bot", type: "file", path: "src/ai-agent/site-bot" },
           ],
         },
       ],
     },
     {
-      name: "config",
+      name: "public",
       type: "folder",
-      path: "config",
+      path: "public",
       children: [
-        {
-          name: "package.json",
-          type: "file",
-          path: "/config/package-json",
-        },
-        {
-          name: "README.md",
-          type: "file",
-          path: "/config/readme",
-        },
+        { name: "sobre.org", type: "file", path: "public/sobre-org" },
+        { name: "contacte.nos", type: "file", path: "public/contacte-nos" },
       ],
     },
+    { name: "README.md", type: "file", path: "readme-md" },
+    { name: "site.xml", type: "file", path: "site-xml" },
   ];
 
   isExpanded(path: string): boolean {
@@ -104,17 +119,19 @@ export class LayoutFileTree {
 
     const extension = fileName.split(".").pop()?.toLowerCase();
     switch (extension) {
-      case "py":
-      case "ts":
-      case "js":
-      case "jsx":
+      case "angular":
+      case "php":
+      case "xml":
+      case "mcp":
+      case "langchain":
         return this.FileCodeIcon;
-      case "json":
+      case "nos":
+      case "bot":
+      case "chat":
         return this.SettingsIcon;
       case "md":
+      case "org":
         return this.FileTextIcon;
-      case "css":
-        return this.FileCodeIcon;
       default:
         return this.FileTextIcon;
     }
@@ -127,18 +144,19 @@ export class LayoutFileTree {
 
     const extension = fileName.split(".").pop()?.toLowerCase();
     switch (extension) {
-      case "py":
-        return "text-green-400";
-      case "ts":
-      case "js":
-      case "jsx":
+      case "angular":
+      case "php":
+      case "xml":
+      case "mcp":
+      case "langchain":
         return "text-blue-400";
-      case "json":
+      case "nos":
+      case "bot":
+      case "chat":
         return "text-green-400";
       case "md":
+      case "org":
         return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
-      case "css":
-        return "text-pink-400";
       default:
         return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
     }

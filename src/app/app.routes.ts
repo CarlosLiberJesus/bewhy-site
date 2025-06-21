@@ -3,45 +3,77 @@ import { Routes } from "@angular/router";
 export const routes: Routes = [
   {
     path: "",
-    redirectTo: "/projects/moodle-agent/moodle-chat",
+    redirectTo: "src/web-app/index-angular",
     pathMatch: "full",
   },
   {
-    path: "projects/moodle-agent/moodle-chat",
+    path: "src/web-app/index-angular",
     loadComponent: () =>
-      import("./pages/projects/moodle-agent/moodle-chat/moodle-chat").then(
+      import("./pages/src/webapp/index-angular/index-angular").then(
+        (m) => m.IndexAngular,
+      ),
+  },
+  {
+    path: "src/web-app/laravel-php",
+    loadComponent: () =>
+      import("./pages/src/webapp/laravel-php/laravel-php").then(
+        (m) => m.LaravelPhp,
+      ),
+  },
+  {
+    path: "readme-md",
+    loadComponent: () =>
+      import("./pages/read-me/read-me").then((m) => m.ReadMe),
+  },
+  {
+    path: "site-xml",
+    loadComponent: () =>
+      import("./pages/site-xml/site-xml").then((m) => m.SiteXml),
+  },
+  {
+    path: "404",
+    loadComponent: () =>
+      import("./layout/not-found/not-found").then((m) => m.NotFound),
+  },
+  {
+    path: "public/sobre-org",
+    loadComponent: () =>
+      import("./pages/public/about-us/about-us").then((m) => m.AboutUs),
+  },
+  {
+    path: "public/contacte-nos",
+    loadComponent: () =>
+      import("./pages/public/contacts/contacts").then((m) => m.Contacts),
+  },
+  {
+    path: "src/ai-agent/site-bot",
+    loadComponent: () =>
+      import("./pages/src/ai-agents/site-bot/site-bot").then((m) => m.SiteBot),
+  },
+  {
+    path: "src/ai-agent/moodle-agent/moodle-chat",
+    loadComponent: () =>
+      import("./pages/src/ai-agents/moodle-agent/moodle-chat/moodle-chat").then(
         (m) => m.MoodleChat,
       ),
   },
   {
-    path: "projects/moodle-agent/moodle-langchain",
+    path: "src/ai-agent/moodle-agent/moodle-langchain",
     loadComponent: () =>
       import(
-        "./pages/projects/moodle-agent/moodle-langchain/moodle-langchain"
+        "./pages/src/ai-agents/moodle-agent/moodle-langchain/moodle-langchain"
       ).then((m) => m.MoodleLangChain),
   },
   {
-    path: "projects/moodle-agent/moodle-mcp",
+    path: "src/ai-agent/moodle-agent/moodle-mcp",
     loadComponent: () =>
-      import("./pages/projects/moodle-agent/moodle-mcp/moodle-mcp").then(
+      import("./pages/src/ai-agents/moodle-agent/moodle-mcp/moodle-mcp").then(
         (m) => m.MoodleMcp,
       ),
   },
   {
-    path: "config/package-json",
-    loadComponent: () =>
-      import("./pages/config/package-json/package-json").then(
-        (m) => m.PackageJson,
-      ),
-  },
-  {
-    path: "config/readme",
-    loadComponent: () =>
-      import("./pages/config/readme/readme").then((m) => m.Readme),
-  },
-  {
     path: "**",
     loadComponent: () =>
-      import("./pages/not-found/not-found").then((m) => m.NotFound),
+      import("./layout/not-found/not-found").then((m) => m.NotFound),
   },
 ];

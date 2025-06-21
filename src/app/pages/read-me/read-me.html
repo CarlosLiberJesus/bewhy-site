@@ -1,0 +1,10 @@
+<div class="flex-1 overflow-hidden">
+  <div class="h-full overflow-auto">
+    <div class="pt-3">
+      <div *ngFor="let line of formattedContent; let i = index" class="flex">
+        <div [class]="getLineNumberClasses()">{{ i + 1 }}</div>
+        <div [class]="getContentClasses()">{{ line || ' ' }}</div>
+      </div>
+    </div>
+  </div>
+</div>

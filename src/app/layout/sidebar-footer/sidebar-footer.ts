@@ -1,6 +1,14 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  inject,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Sun, Moon, User } from "lucide-angular";
+import { ThemeService } from "../../services/theme-service";
 
 @Component({
   selector: "app-layout-sidebar-footer",
@@ -9,7 +17,7 @@ import { LucideAngularModule, Sun, Moon, User } from "lucide-angular";
   templateUrl: "./sidebar-footer.html",
   styleUrl: "./sidebar-footer.scss",
 })
-export class LayoutSidebarFooter {
+export class LayoutSidebarFooter implements OnInit {
   @Input() isDarkTheme = true;
   @Output() themeToggled = new EventEmitter<void>();
 
@@ -17,9 +25,17 @@ export class LayoutSidebarFooter {
   readonly MoonIcon = Moon;
   readonly UserIcon = User;
 
+  private themeService = inject(ThemeService);
+
+  ngOnInit() {
+    this.themeService.theme$.subscribe((isDark) => {
+      this.isDarkTheme = isDark;
+    });
+  }
+
   getFooterClasses(): string {
     const baseClasses =
-      "flex items-center justify-between p-4 border-t border-opacity-20 flex-shrink-0";
+      "flex items-center justify-between p-4 border-t flex-shrink-0";
     const themeClasses = this.isDarkTheme
       ? "border-gray-800"
       : "border-gray-300";
@@ -40,5 +56,9 @@ export class LayoutSidebarFooter {
       ? "text-gray-400 hover:text-white hover:bg-gray-900"
       : "text-gray-600 hover:text-black hover:bg-gray-100";
     return `${baseClasses} ${themeClasses}`;
+  }
+
+  onThemeToggle() {
+    this.themeService.setDarkTheme(!this.isDarkTheme);
   }
 }

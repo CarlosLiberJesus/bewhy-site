@@ -1,12 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { Subject } from "rxjs/internal/Subject";
+import { filter } from "rxjs/operators";
+import { takeUntil } from "rxjs/internal/operators/takeUntil";
 import { LucideAngularModule, Menu, X } from "lucide-angular";
 import { LayoutFileTree } from "./layout/file-tree/file-tree";
 import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
 import { LayoutTabBar } from "./layout/tab-bar/tab-bar";
-import { RouterOutlet } from "@angular/router";
-import { filter } from "rxjs/operators";
+import { SystemMessages } from "./layout/system-messages/system-messages";
+import { ThemeService } from "./services/theme-service";
 
 @Component({
   selector: "app-root",
@@ -16,21 +19,23 @@ import { filter } from "rxjs/operators";
     LucideAngularModule,
     LayoutFileTree,
     LayoutTabBar,
+    SystemMessages,
     LayoutSidebarFooter,
   ],
   templateUrl: "./app.html",
   styleUrl: "./app.scss",
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   sidebarOpen = false;
-  activeFile = "/projects/moodle-agent/moodle-chat";
-  openTabs = ["/projects/moodle-agent/moodle-chat"];
+  activeFile = "src/web-app/index-angular";
+  openTabs = ["src/web-app/index-angular", "readme-md"];
   isDarkTheme = true;
-
+  private destroy$ = new Subject<void>();
   readonly MenuIcon = Menu;
   readonly XIcon = X;
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private themeService = inject(ThemeService);
 
   get themeClass(): string {
     return this.isDarkTheme ? "bg-black text-white" : "bg-white text-black";
@@ -38,7 +43,7 @@ export class App implements OnInit {
 
   get sidebarClasses(): string {
     const baseClasses =
-      "fixed md:relative z-50 md:z-0 w-80 h-full transition-transform duration-300 ease-in-out border-r border-opacity-20";
+      "fixed md:relative z-50 md:z-0 w-80 h-full transition-transform duration-300 ease-in-out border-r";
     const themeClasses = this.isDarkTheme
       ? "bg-black border-gray-800"
       : "bg-white border-gray-300";
@@ -50,17 +55,20 @@ export class App implements OnInit {
   }
 
   ngOnInit() {
-    // Load theme preference from localStorage
-    const savedTheme = localStorage.getItem("ide-theme");
-    if (savedTheme) {
-      this.isDarkTheme = savedTheme === "dark";
-    }
-
-    // Listen to route changes to update active file
+    this.themeService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDark) => {
+        this.isDarkTheme = isDark;
+        document.documentElement.classList.toggle("dark", isDark);
+      });
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((event: NavigationEnd) => {
-        this.activeFile = event.url;
+        const normalized = event.url.startsWith("/")
+          ? event.url.slice(1)
+          : event.url;
+        this.activeFile = normalized;
       });
   }
 
@@ -91,6 +99,7 @@ export class App implements OnInit {
   handleTabClose(path: string) {
     this.openTabs = this.openTabs.filter((tab) => tab !== path);
     if (this.activeFile === path && this.openTabs.length > 0) {
+      //fix: set the last opened tab as active
       const newActiveTab = this.openTabs[this.openTabs.length - 1];
       this.setActiveFile(newActiveTab);
     } else if (this.openTabs.length === 0) {
@@ -100,7 +109,11 @@ export class App implements OnInit {
   }
 
   toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    localStorage.setItem("ide-theme", this.isDarkTheme ? "dark" : "light");
+    this.themeService.setDarkTheme(!this.isDarkTheme);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

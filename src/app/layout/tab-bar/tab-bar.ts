@@ -28,7 +28,7 @@ export class LayoutTabBar {
   readonly SettingsIcon = Settings;
 
   getTabBarClasses(): string {
-    const baseClasses = "border-b border-opacity-20 flex overflow-x-auto";
+    const baseClasses = "border-b flex overflow-x-auto";
     const themeClasses = this.isDarkTheme
       ? "bg-black border-gray-800"
       : "bg-white border-gray-300";
@@ -36,8 +36,7 @@ export class LayoutTabBar {
   }
 
   getTabClasses(tab: string): string {
-    const baseClasses =
-      "flex items-center min-w-0 border-r border-opacity-20 group";
+    const baseClasses = "flex items-center min-w-0 border-r group";
     const borderClasses = this.isDarkTheme
       ? "border-gray-800"
       : "border-gray-300";
@@ -71,42 +70,60 @@ export class LayoutTabBar {
   }
 
   getFileIcon(fileName: string) {
-    const extension = fileName.split(".").pop()?.toLowerCase();
+    const extension = this.getFileName(fileName)
+      .split(".")
+      .pop()
+      ?.toLowerCase();
     switch (extension) {
-      case "ts":
-      case "js":
-      case "jsx":
+      case "angular":
+      case "php":
+      case "xml":
+      case "mcp":
+      case "langchain":
         return this.FileCodeIcon;
-      case "json":
+      case "nos":
+      case "bot":
+      case "chat":
         return this.SettingsIcon;
       case "md":
+      case "org":
         return this.FileTextIcon;
-      case "css":
-        return this.FileCodeIcon;
       default:
         return this.FileTextIcon;
     }
   }
 
   getIconClass(fileName: string): string {
-    const extension = fileName.split(".").pop()?.toLowerCase();
+    const extension = this.getFileName(fileName)
+      .split(".")
+      .pop()
+      ?.toLowerCase();
+
     switch (extension) {
-      case "ts":
-      case "js":
-      case "jsx":
+      case "angular":
+      case "php":
+      case "xml":
+      case "mcp":
+      case "langchain":
         return "text-blue-400";
-      case "json":
+      case "nos":
+      case "bot":
+      case "chat":
         return "text-green-400";
       case "md":
+      case "org":
         return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
-      case "css":
-        return "text-pink-400";
       default:
         return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
     }
   }
 
   getFileName(path: string): string {
-    return path.split("/").pop() || path;
+    const last = path.split("/").pop() || path;
+    const dotIndex = last.indexOf("-");
+    if (dotIndex > 0) {
+      return last.slice(0, dotIndex) + "." + last.slice(dotIndex + 1);
+    }
+    return last;
   }
 }

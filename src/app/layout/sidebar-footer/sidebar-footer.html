@@ -1,9 +1,14 @@
 <div [class]="getFooterClasses()">
   <!-- Theme Switcher -->
   <button
-    (click)="themeToggled.emit()"
+    (click)="onThemeToggle()"
     [class]="getThemeButtonClasses()"
-    [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+    [title]="isDarkTheme ? 'Alterar para Claro' : 'Alterar para Escuro'"
+    tabindex="1"
+    role="button"
+    aria-label="Alterar tema"
+    (keydown.enter)="onThemeToggle()"
+    (keydown.space)="onThemeToggle()"
   >
     <lucide-icon
       [img]="isDarkTheme ? SunIcon : MoonIcon"
@@ -12,7 +17,7 @@
   </button>
 
   <!-- Auth Avatar Placeholder -->
-  <button [class]="getAvatarButtonClasses()" title="User profile">
+  <button [class]="getAvatarButtonClasses()" title="Perfil Utilizador">
     <lucide-icon [img]="UserIcon" size="18"></lucide-icon>
   </button>
 </div>

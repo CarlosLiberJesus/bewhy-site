@@ -1,40 +1,19 @@
 <div
   [class]="themeClass + ' h-screen flex flex-col transition-colors duration-300'"
 >
-  <!-- Mobile Header -->
-  <div
-    class="md:hidden border-b border-opacity-20 p-4 flex items-center justify-between"
-    [class.border-gray-800]="isDarkTheme"
-    [class.border-gray-300]="!isDarkTheme"
-  >
-    <button
-      (click)="toggleSidebar()"
-      class="md:hidden p-2"
-      tabindex="0"
-      role="button"
-      aria-label="Toggle sidebar"
-    >
-      <lucide-icon
-        [img]="sidebarOpen ? XIcon : MenuIcon"
-        size="24"
-      ></lucide-icon>
-    </button>
-    <div class="text-sm font-mono opacity-75">{{ activeFile }}</div>
-  </div>
-
   <div class="flex flex-1 overflow-hidden">
     <!-- Sidebar -->
     <div [class]="sidebarClasses">
       <div class="h-full flex flex-col">
         <!-- Explorer Header -->
         <div
-          class="p-4 border-b border-opacity-20 flex-shrink-0"
+          class="p-4 border-b flex-shrink-0"
           [class.border-gray-800]="isDarkTheme"
           [class.border-gray-300]="!isDarkTheme"
         >
-          <h2 class="text-sm font-semibold opacity-75 uppercase tracking-wider">
-            Explorer
-          </h2>
+          <h1 class="text-sm font-semibold opacity-75 uppercase tracking-wider">
+            BeWhyOrg
+          </h1>
         </div>
 
         <!-- File Tree -->
@@ -48,10 +27,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <app-layout-sidebar-footer
-          [isDarkTheme]="isDarkTheme"
-          (themeToggled)="toggleTheme()"
-        >
+        <app-layout-sidebar-footer (themeToggled)="toggleTheme()">
         </app-layout-sidebar-footer>
       </div>
     </div>
@@ -68,22 +44,49 @@
       >
       </app-layout-tab-bar>
 
-      <!-- Router Outlet - This is where the pages will be displayed -->
+      <!-- Editor Area -->
       <div class="flex-1 overflow-hidden">
-        <router-outlet></router-outlet>
+        <div class="flex flex-col">
+          <app-system-messages></app-system-messages>
+
+          <router-outlet></router-outlet>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Mobile Overlay -->
-  <div
-    *ngIf="sidebarOpen"
-    class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-    (click)="closeSidebar()"
-    tabindex="0"
-    role="button"
-    aria-label="Close sidebar"
-    (keydown.enter)="closeSidebar()"
-    (keydown.space)="closeSidebar()"
-  ></div>
+    <!-- Mobile Overlay -->
+    <div
+      class="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t p-4 bg-white dark:bg-black flex justify-between items-center"
+      [class.border-gray-800]="isDarkTheme"
+      [class.border-gray-300]="!isDarkTheme"
+    >
+      <!-- Botão para abrir o sidebar -->
+      <button
+        *ngIf="!sidebarOpen"
+        class="md:hidden"
+        (click)="toggleSidebar()"
+        tabindex="0"
+        role="button"
+        aria-label="Abrir menu lateral"
+        (keydown.enter)="toggleSidebar()"
+        (keydown.space)="toggleSidebar()"
+      >
+        <lucide-icon [img]="MenuIcon" size="24"></lucide-icon>
+      </button>
+
+      <!-- Botão para fechar o sidebar (aparece quando aberto) -->
+      <button
+        *ngIf="sidebarOpen"
+        class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+        (click)="closeSidebar()"
+        tabindex="0"
+        role="button"
+        aria-label="Fechar menu lateral"
+        (keydown.enter)="closeSidebar()"
+        (keydown.space)="closeSidebar()"
+      >
+        <lucide-icon [img]="XIcon" size="24"></lucide-icon>
+      </button>
+    </div>
+  </div>
 </div>
