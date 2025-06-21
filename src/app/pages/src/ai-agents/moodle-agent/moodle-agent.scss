@@ -1,0 +1,26 @@
+// Estilo minimalista para componente pai
+.moodle-service {
+  @apply transition-all duration-200 hover:bg-opacity-50;
+}
+
+// Código com aparência de terminal
+pre {
+  @apply bg-transparent;
+  font-family: 'Courier New', monospace;
+  line-height: 1.4;
+}
+
+// Links com efeito retro
+a {
+  @apply transition-colors duration-200;
+  
+  &:hover {
+    @apply transform translate-x-1;
+  }
+}
+
+// Bordas com estilo space/retro
+.border {
+  border-style: solid;
+  border-width: 1px;
+}

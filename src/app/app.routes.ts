@@ -51,6 +51,13 @@ export const routes: Routes = [
       import("./pages/src/ai-agents/site-bot/site-bot").then((m) => m.SiteBot),
   },
   {
+    path: "src/ai-agent/moodle-agent",
+    loadComponent: () =>
+      import("./pages/src/ai-agents/moodle-agent/moodle-agent").then(
+        (m) => m.MoodleAgent,
+      ),
+  },
+  {
     path: "src/ai-agent/moodle-agent/moodle-chat",
     loadComponent: () =>
       import("./pages/src/ai-agents/moodle-agent/moodle-chat/moodle-chat").then(
