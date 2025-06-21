@@ -6,10 +6,12 @@ import {
   FolderOpen,
   FileText,
   FileCode,
-  Settings,
+  MessageCircle,
   ChevronRight,
   ChevronDown,
-} from "lucide-angular";
+  Link,
+  Server,
+} from "lucide-angular/src/icons";
 
 interface FileNode {
   name: string;
@@ -30,15 +32,33 @@ export class LayoutFileTree {
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();
 
-  expandedFolders = new Set(["src", "src/web-app"]);
+  expandedFolders: Set<string>;
+
+  constructor() {
+    // Pega o path da URL (sem barra inicial)
+    const url = window.location.pathname.replace(/^\/+/, "");
+    // Exemplo: "src/ai-agent/moodle-agent/moodle-langchain"
+    // Queremos ["src", "src/ai-agent", "src/ai-agent/moodle-agent"]
+    const segments = url.split("/");
+    const folders: string[] = [];
+    for (let i = 1; i < segments.length; i++) {
+      const folderPath = segments.slice(0, i).join("/");
+      folders.push(folderPath);
+    }
+    // expande "src" se padrão
+    // if (!folders.includes("src")) folders.unshift("src");
+    this.expandedFolders = new Set(folders);
+  }
 
   readonly FolderIcon = Folder;
   readonly FolderOpenIcon = FolderOpen;
   readonly FileTextIcon = FileText;
   readonly FileCodeIcon = FileCode;
-  readonly SettingsIcon = Settings;
+  readonly MessageCircleIcon = MessageCircle;
   readonly ChevronRightIcon = ChevronRight;
   readonly ChevronDownIcon = ChevronDown;
+  readonly LinkIcon = Link;
+  readonly ServerIcon = Server;
 
   fileStructure: FileNode[] = [
     {
@@ -71,7 +91,7 @@ export class LayoutFileTree {
             {
               name: "moodle-agent",
               type: "folder",
-              path: "src/moodle-agent",
+              path: "src/ai-agent/moodle-agent",
               children: [
                 {
                   name: "moodle.chat",
@@ -122,13 +142,15 @@ export class LayoutFileTree {
       case "angular":
       case "php":
       case "xml":
-      case "mcp":
-      case "langchain":
         return this.FileCodeIcon;
+      case "mcp":
+        return this.ServerIcon;
+      case "langchain":
+        return this.LinkIcon;
       case "nos":
       case "bot":
       case "chat":
-        return this.SettingsIcon;
+        return this.MessageCircleIcon;
       case "md":
       case "org":
         return this.FileTextIcon;
@@ -147,9 +169,11 @@ export class LayoutFileTree {
       case "angular":
       case "php":
       case "xml":
-      case "mcp":
-      case "langchain":
         return "text-blue-400";
+      case "mcp":
+        return "text-orange-500";
+      case "langchain":
+        return "text-purple-400";
       case "nos":
       case "bot":
       case "chat":

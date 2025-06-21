@@ -27,8 +27,10 @@ import { ThemeService } from "./services/theme-service";
 })
 export class App implements OnInit, OnDestroy {
   sidebarOpen = false;
-  activeFile = "src/web-app/index-angular";
-  openTabs = ["src/web-app/index-angular", "readme-md"];
+  private initialPath: string;
+  activeFile: string;
+  openTabs: string[];
+
   isDarkTheme = true;
   private destroy$ = new Subject<void>();
   readonly MenuIcon = Menu;
@@ -36,6 +38,17 @@ export class App implements OnInit, OnDestroy {
 
   private router = inject(Router);
   private themeService = inject(ThemeService);
+
+  constructor() {
+    // Pega o path da URL (sem barra inicial)
+    const url = window.location.pathname.replace(/^\/+/, "");
+    this.initialPath = url || "src/web-app/index-angular";
+    this.activeFile = this.initialPath;
+    this.openTabs = [
+      "readme-md",
+      this.initialPath !== "readme-md" ? this.initialPath : "",
+    ].filter(Boolean) as string[];
+  }
 
   get themeClass(): string {
     return this.isDarkTheme ? "bg-black text-white" : "bg-white text-black";
@@ -99,7 +112,6 @@ export class App implements OnInit, OnDestroy {
   handleTabClose(path: string) {
     this.openTabs = this.openTabs.filter((tab) => tab !== path);
     if (this.activeFile === path && this.openTabs.length > 0) {
-      //fix: set the last opened tab as active
       const newActiveTab = this.openTabs[this.openTabs.length - 1];
       this.setActiveFile(newActiveTab);
     } else if (this.openTabs.length === 0) {

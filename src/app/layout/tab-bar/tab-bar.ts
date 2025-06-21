@@ -5,8 +5,11 @@ import {
   X,
   FileText,
   FileCode,
-  Settings,
-} from "lucide-angular";
+  MessageCircle,
+  Link,
+  Server,
+  AlertTriangle,
+} from "lucide-angular/src/icons";
 
 @Component({
   selector: "app-layout-tab-bar",
@@ -25,7 +28,10 @@ export class LayoutTabBar {
   readonly XIcon = X;
   readonly FileTextIcon = FileText;
   readonly FileCodeIcon = FileCode;
-  readonly SettingsIcon = Settings;
+  readonly MessageCircleIcon = MessageCircle;
+  readonly LinkIcon = Link;
+  readonly ServerIcon = Server;
+  readonly AlertTriangleIcon = AlertTriangle;
 
   getTabBarClasses(): string {
     const baseClasses = "border-b flex overflow-x-auto";
@@ -78,18 +84,20 @@ export class LayoutTabBar {
       case "angular":
       case "php":
       case "xml":
-      case "mcp":
-      case "langchain":
         return this.FileCodeIcon;
+      case "mcp":
+        return this.ServerIcon;
+      case "langchain":
+        return this.LinkIcon;
       case "nos":
       case "bot":
       case "chat":
-        return this.SettingsIcon;
+        return this.MessageCircleIcon;
       case "md":
       case "org":
         return this.FileTextIcon;
       default:
-        return this.FileTextIcon;
+        return this.AlertTriangleIcon;
     }
   }
 
@@ -103,9 +111,11 @@ export class LayoutTabBar {
       case "angular":
       case "php":
       case "xml":
-      case "mcp":
-      case "langchain":
         return "text-blue-400";
+      case "mcp":
+        return "text-orange-500";
+      case "langchain":
+        return "text-purple-400";
       case "nos":
       case "bot":
       case "chat":
@@ -114,13 +124,16 @@ export class LayoutTabBar {
       case "org":
         return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
       default:
-        return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
+        return "text-yellow-500";
     }
   }
 
   getFileName(path: string): string {
     const last = path.split("/").pop() || path;
     const dotIndex = last.indexOf("-");
+    if (last.startsWith("readme")) {
+      return "README.md";
+    }
     if (dotIndex > 0) {
       return last.slice(0, dotIndex) + "." + last.slice(dotIndex + 1);
     }

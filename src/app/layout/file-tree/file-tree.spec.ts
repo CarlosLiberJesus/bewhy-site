@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { FileTree } from "./file-tree";
+import { LayoutFileTree } from "./file-tree";
 
-describe("FileTree", () => {
-  let component: FileTree;
-  let fixture: ComponentFixture<FileTree>;
+describe("LayoutFileTree", () => {
+  let component: LayoutFileTree;
+  let fixture: ComponentFixture<LayoutFileTree>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileTree],
+      imports: [LayoutFileTree],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FileTree);
+    fixture = TestBed.createComponent(LayoutFileTree);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

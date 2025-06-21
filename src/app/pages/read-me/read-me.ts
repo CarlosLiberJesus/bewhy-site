@@ -20,7 +20,6 @@ import { ThemeService } from "../../services/theme-service";
 export class ReadMe implements OnInit, OnDestroy {
   activeFile = "README.md";
   isDarkTheme = true;
-  private destroy$ = new Subject<void>();
 
   readonly FileCodeIcon = FileCode;
   readonly FileTextIcon = FileText;
@@ -37,7 +36,7 @@ export class ReadMe implements OnInit, OnDestroy {
 
 `,
   };
-
+  private destroy$ = new Subject<void>();
   private themeService = inject(ThemeService);
 
   ngOnInit() {

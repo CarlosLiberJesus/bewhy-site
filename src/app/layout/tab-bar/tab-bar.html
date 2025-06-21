@@ -14,11 +14,7 @@
       <span [class]="getTabTextClasses(tab)"> {{ getFileName(tab) }} </span>
     </button>
 
-    <button
-      *ngIf="tabs.length > 1"
-      (click)="tabClosed.emit(tab)"
-      [class]="getCloseButtonClasses()"
-    >
+    <button (click)="tabClosed.emit(tab)" [class]="getCloseButtonClasses()">
       <lucide-icon [img]="XIcon" size="12"></lucide-icon>
     </button>
   </div>

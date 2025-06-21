@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, MessageCircle, Bot, User } from "lucide-angular";
+import { MoodleAgent } from "../moodle-agent";
 
 @Component({
   selector: "app-moodle-chat",
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, MoodleAgent],
   templateUrl: "./moodle-chat.html",
   styleUrl: "./moodle-chat.scss",
 })

@@ -1,7 +1,6 @@
 .feature-card {
-  @apply transition-all duration-200 hover:shadow-md;
+  @apply transition-all duration-200 hover:shadow-2xl hover:scale-105;
 }
-
 pre code {
   @apply block overflow-x-auto;
 }
