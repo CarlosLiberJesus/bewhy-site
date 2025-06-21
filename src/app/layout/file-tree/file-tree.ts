@@ -30,7 +30,7 @@ export class LayoutFileTree {
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();
 
-  expandedFolders = new Set(["src", "src/ai-agent"]);
+  expandedFolders = new Set(["src", "src/web-app"]);
 
   readonly FolderIcon = Folder;
   readonly FolderOpenIcon = FolderOpen;
@@ -71,13 +71,8 @@ export class LayoutFileTree {
             {
               name: "moodle-agent",
               type: "folder",
-              path: "src/ai-agent/moodle-agent",
+              path: "src/moodle-agent",
               children: [
-                {
-                  name: "moodle-agent.py",
-                  type: "file",
-                  path: "src/ai-agent/moodle-agent",
-                },
                 {
                   name: "moodle.chat",
                   type: "file",
@@ -129,7 +124,6 @@ export class LayoutFileTree {
       case "xml":
       case "mcp":
       case "langchain":
-      case "py":
         return this.FileCodeIcon;
       case "nos":
       case "bot":
@@ -155,7 +149,6 @@ export class LayoutFileTree {
       case "xml":
       case "mcp":
       case "langchain":
-      case "py":
         return "text-blue-400";
       case "nos":
       case "bot":
