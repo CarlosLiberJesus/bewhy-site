@@ -216,9 +216,9 @@ export class LayoutFileTree implements OnInit, OnDestroy {
         return "text-green-400";
       case "md":
       case "org":
-        return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
+        return "text-gray-400";
       default:
-        return this.isDarkTheme ? "text-gray-400" : "text-gray-600";
+        return "text-gray-400";
     }
   }
 
@@ -226,7 +226,7 @@ export class LayoutFileTree implements OnInit, OnDestroy {
     const baseClasses =
       "flex items-center py-1 px-2 cursor-pointer transition-colors";
     const hoverClasses = this.isDarkTheme
-      ? "hover:bg-gray-900"
+      ? "hover:bg-gray-700"
       : "hover:bg-gray-100";
     const activeClasses =
       this.activeFile === node.path
@@ -242,7 +242,7 @@ export class LayoutFileTree implements OnInit, OnDestroy {
     const baseClasses = "text-sm font-mono";
     const activeClasses =
       this.activeFile === node.path ? "text-yellow-500 font-medium" : "";
-    const themeClasses = this.isDarkTheme ? "text-gray-300" : "text-gray-700";
+    const themeClasses = this.isDarkTheme ? "text-gray-200" : "text-gray-700";
 
     return `${baseClasses} ${activeClasses || themeClasses}`;
   }

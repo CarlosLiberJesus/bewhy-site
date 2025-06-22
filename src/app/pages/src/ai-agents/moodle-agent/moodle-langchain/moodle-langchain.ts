@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Link, Database, Zap } from "lucide-angular";
+import { Subject, takeUntil } from "rxjs";
+import { ThemeService } from "../../../../../services/theme-service";
 
 @Component({
   selector: "app-moodle-langchain",
@@ -9,7 +11,7 @@ import { LucideAngularModule, Link, Database, Zap } from "lucide-angular";
   templateUrl: "./moodle-langchain.html",
   styleUrl: "./moodle-langchain.scss",
 })
-export class MoodleLangChain {
+export class MoodleLangChain implements OnInit, OnDestroy {
   readonly LinkIcon = Link;
   readonly DatabaseIcon = Database;
   readonly ZapIcon = Zap;
@@ -99,4 +101,21 @@ class MoodleLangChain:
       description: "AI responses based on specific Moodle course context",
     },
   ];
+
+  private destroy$ = new Subject<void>();
+  private themeService = inject(ThemeService);
+  isDarkTheme = true;
+
+  ngOnInit() {
+    this.themeService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDark) => {
+        this.isDarkTheme = isDark;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

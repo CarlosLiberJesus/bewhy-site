@@ -9,11 +9,29 @@
         <div
           class="p-4 border-b flex-shrink-0"
           [class.border-gray-800]="isDarkTheme"
-          [class.border-gray-300]="!isDarkTheme"
+          [class.border-gray-200]="!isDarkTheme"
         >
           <h1 class="text-sm font-semibold opacity-75 uppercase tracking-wider">
             BeWhyOrg
           </h1>
+
+          <!-- Botão para fechar o sidebar (aparece quando aberto) -->
+          <button
+            *ngIf="sidebarOpen"
+            class="md:hidden fixed top-4 right-3 z-40"
+            (click)="closeSidebar()"
+            tabindex="0"
+            role="button"
+            aria-label="Fechar menu lateral"
+            (keydown.enter)="closeSidebar()"
+            (keydown.space)="closeSidebar()"
+          >
+            <lucide-icon
+              [img]="XIcon"
+              size="18"
+              [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-700'"
+            ></lucide-icon>
+          </button>
         </div>
 
         <!-- File Tree -->
@@ -55,9 +73,9 @@
 
     <!-- Mobile Overlay -->
     <div
-      class="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t p-4 bg-white dark:bg-black flex justify-between items-center"
+      class="md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 flex justify-between items-center"
       [class.border-gray-800]="isDarkTheme"
-      [class.border-gray-300]="!isDarkTheme"
+      [class.border-gray-200]="!isDarkTheme"
     >
       <!-- Botão para abrir o sidebar -->
       <button

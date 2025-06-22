@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Server, Shield, Settings } from "lucide-angular";
+import { Subject, takeUntil } from "rxjs";
+import { ThemeService } from "../../../../../services/theme-service";
 
 @Component({
   selector: "app-moodle-mcp",
@@ -9,7 +11,7 @@ import { LucideAngularModule, Server, Shield, Settings } from "lucide-angular";
   templateUrl: "./moodle-mcp.html",
   styleUrl: "./moodle-mcp.scss",
 })
-export class MoodleMcp {
+export class MoodleMcp implements OnInit, OnDestroy {
   readonly ServerIcon = Server;
   readonly ShieldIcon = Shield;
   readonly SettingsIcon = Settings;
@@ -113,4 +115,21 @@ if __name__ == "__main__":
       status: "pending",
     },
   ];
+
+  private destroy$ = new Subject<void>();
+  private themeService = inject(ThemeService);
+  isDarkTheme = true;
+
+  ngOnInit() {
+    this.themeService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDark) => {
+        this.isDarkTheme = isDark;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

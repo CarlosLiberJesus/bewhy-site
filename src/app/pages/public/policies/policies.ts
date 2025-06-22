@@ -1,10 +1,11 @@
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { ThemeService } from "../../../services/theme-service";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-policies",
-  imports: [],
+  imports: [CommonModule],
   templateUrl: "./policies.html",
   styleUrl: "./policies.scss",
 })
@@ -23,7 +24,7 @@ export class Policies implements OnInit, OnDestroy {
   }
 
   getContrast(baseClasses: string): string {
-    const themeClasses = this.isDarkTheme ? "dark:prose-invert prose" : "prose";
+    const themeClasses = this.isDarkTheme ? "prose-invert prose" : "prose";
     return `${baseClasses} ${themeClasses}`;
   }
 

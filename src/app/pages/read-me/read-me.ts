@@ -54,13 +54,13 @@ export class ReadMe implements OnInit, OnDestroy {
 
   getLineNumberClasses(): string {
     const baseClasses = "w-12 text-right pr-4 text-sm font-mono select-none";
-    const themeClasses = this.isDarkTheme ? "text-gray-600" : "text-gray-400";
+    const themeClasses = "text-gray-400";
     return `${baseClasses} ${themeClasses}`;
   }
 
   getContentClasses(): string {
     const baseClasses = "flex-1 text-sm font-mono whitespace-pre";
-    const themeClasses = this.isDarkTheme ? "text-gray-300" : "text-gray-700";
+    const themeClasses = this.isDarkTheme ? "text-gray-200" : "text-gray-700";
     return `${baseClasses} ${themeClasses}`;
   }
 

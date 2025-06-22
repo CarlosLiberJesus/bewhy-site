@@ -41,7 +41,7 @@ export class NotFound implements OnInit, OnDestroy {
   }
 
   getContrast(baseClasses: string): string {
-    const themeClasses = this.isDarkTheme ? "text-gray-600" : "text-gray-400";
+    const themeClasses = "text-gray-400";
     return `${baseClasses} ${themeClasses}`;
   }
 

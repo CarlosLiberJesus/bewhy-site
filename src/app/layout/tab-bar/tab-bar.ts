@@ -55,7 +55,7 @@ export class LayoutTabBar {
     const baseClasses = "border-b flex overflow-x-auto";
     const themeClasses = this.isDarkTheme
       ? "bg-black border-gray-800"
-      : "bg-white border-gray-300";
+      : "bg-white border-gray-200";
     return `${baseClasses} ${themeClasses}`;
   }
 
@@ -63,14 +63,14 @@ export class LayoutTabBar {
     const baseClasses = "flex items-center min-w-0 border-r group";
     const borderClasses = this.isDarkTheme
       ? "border-gray-800"
-      : "border-gray-300";
+      : "border-gray-200";
     const activeClasses =
       this.activeTab === tab
         ? this.isDarkTheme
-          ? "bg-gray-900 border-b-2 border-yellow-500"
-          : "bg-gray-100 border-b-2 border-yellow-500"
+          ? "bg-gray-800 border-b-2 border-yellow-500"
+          : "bg-gray-200 border-b-2 border-yellow-500"
         : this.isDarkTheme
-          ? "hover:bg-gray-900"
+          ? "hover:bg-gray-700"
           : "hover:bg-gray-100";
 
     return `${baseClasses} ${borderClasses} ${activeClasses}`;
@@ -79,7 +79,7 @@ export class LayoutTabBar {
   getTabTextClasses(tab: string): string {
     const baseClasses = "text-sm font-mono truncate";
     const activeClasses = this.activeTab === tab ? "text-yellow-500" : "";
-    const themeClasses = this.isDarkTheme ? "text-gray-300" : "text-gray-700";
+    const themeClasses = this.isDarkTheme ? "text-gray-200" : "text-gray-700";
 
     return `${baseClasses} ${activeClasses || themeClasses}`;
   }
@@ -87,8 +87,8 @@ export class LayoutTabBar {
   getCloseButtonClasses(): string {
     const baseClasses = "p-2 transition-colors flex-shrink-0";
     const themeClasses = this.isDarkTheme
-      ? "hover:bg-gray-800 text-gray-400 hover:text-white"
-      : "hover:bg-gray-200 text-gray-600 hover:text-black";
+      ? "hover:bg-gray-700 text-gray-400 hover:text-white"
+      : "hover:bg-gray-100 text-gray-600 hover:text-black";
 
     return `${baseClasses} ${themeClasses}`;
   }

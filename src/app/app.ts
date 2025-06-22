@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { Subject, filter, takeUntil } from "rxjs";
-import { LucideAngularModule, Menu } from "lucide-angular";
+import { LucideAngularModule, Menu, X } from "lucide-angular";
 import { LayoutFileTree } from "./layout/file-tree/file-tree";
 import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
 import { LayoutTabBar } from "./layout/tab-bar/tab-bar";
@@ -32,6 +32,7 @@ export class App implements OnInit, OnDestroy {
 
   isDarkTheme = true;
   readonly MenuIcon = Menu;
+  readonly XIcon = X;
 
   private initialPath: string;
   private destroy$ = new Subject<void>();
@@ -61,7 +62,7 @@ export class App implements OnInit, OnDestroy {
       "fixed md:relative z-50 md:z-0 w-80 h-full transition-transform duration-300 ease-in-out border-r";
     const themeClasses = this.isDarkTheme
       ? "bg-black border-gray-800"
-      : "bg-white border-gray-300";
+      : "bg-white border-gray-200";
     const transformClasses = this.sidebarOpen
       ? "translate-x-0"
       : "-translate-x-full md:translate-x-0";
@@ -92,7 +93,7 @@ export class App implements OnInit, OnDestroy {
   private showCookieConsentBanner(): void {
     try {
       if (localStorage.getItem(this.COOKIE_CONSENT_KEY) === "true") {
-        return;
+        // return;
       }
     } catch (e) {
       // LocalStorage might be disabled or unavailable

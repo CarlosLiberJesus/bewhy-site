@@ -14,7 +14,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { Subscription } from "rxjs";
+import { Subject, takeUntil } from "rxjs";
 import { LucideAngularModule, X } from "lucide-angular";
 
 import {
@@ -22,6 +22,7 @@ import {
   SystemMessageType,
 } from "../../services/system-message.model";
 import { SystemMessageService } from "../../services/system-message-service";
+import { ThemeService } from "../../services/theme-service";
 
 @Component({
   selector: "app-system-messages",
@@ -67,22 +68,27 @@ export class SystemMessages implements OnInit, OnDestroy {
   readonly CloseIcon = X;
 
   private messageService = inject(SystemMessageService);
-  private subscription!: Subscription;
 
-  trackById(index: number, message: SystemMessage): string {
+  isDarkTheme = true;
+  private destroy$ = new Subject<void>();
+
+  private themeService = inject(ThemeService);
+
+  ngOnInit() {
+    this.themeService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDark) => {
+        this.isDarkTheme = isDark;
+      });
+    this.messageService.messages$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((messages) => {
+        this.messages = messages;
+      });
+  }
+
+  trackById(_index: number, message: SystemMessage): string {
     return message.id;
-  }
-
-  ngOnInit(): void {
-    this.subscription = this.messageService.messages$.subscribe((messages) => {
-      this.messages = messages;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   closeMessage(messageId: string): void {
@@ -113,7 +119,9 @@ export class SystemMessages implements OnInit, OnDestroy {
       case SystemMessageType.Info:
         return "bg-blue-100 border-blue-500 text-blue-700";
       case SystemMessageType.Cookie:
-        return "bg-slate-100 border-slate-500 text-slate-700 dark:bg-slate-700 dark:border-slate-400 dark:text-slate-200"; // Special styling for cookie
+        return this.isDarkTheme
+          ? "bg-gray-800 border-gray-800"
+          : "bg-gray-200 border-gray-200";
       default:
         return "bg-gray-100 border-gray-500 text-gray-700";
     }
@@ -130,9 +138,14 @@ export class SystemMessages implements OnInit, OnDestroy {
       case SystemMessageType.Info:
         return "text-blue-500";
       case SystemMessageType.Cookie:
-        return "text-slate-500 dark:text-slate-400";
+        return this.isDarkTheme ? "text-gray-200" : "text-gray-700";
       default:
         return "text-gray-500";
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

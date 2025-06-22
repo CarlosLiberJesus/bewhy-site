@@ -1,7 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, MessageCircle, Bot, User } from "lucide-angular";
 import { MoodleAgent } from "../moodle-agent";
+import { Subject, takeUntil } from "rxjs";
+import { ThemeService } from "../../../../../services/theme-service";
 
 @Component({
   selector: "app-moodle-chat",
@@ -10,7 +12,7 @@ import { MoodleAgent } from "../moodle-agent";
   templateUrl: "./moodle-chat.html",
   styleUrl: "./moodle-chat.scss",
 })
-export class MoodleChat {
+export class MoodleChat implements OnInit, OnDestroy {
   readonly MessageCircleIcon = MessageCircle;
   readonly BotIcon = Bot;
   readonly UserIcon = User;
@@ -67,4 +69,21 @@ class MoodleChat:
         
         response = requests.post(self.api_endpoint, data=params)
         return response.json()`;
+
+  private destroy$ = new Subject<void>();
+  private themeService = inject(ThemeService);
+  isDarkTheme = true;
+
+  ngOnInit() {
+    this.themeService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDark) => {
+        this.isDarkTheme = isDark;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

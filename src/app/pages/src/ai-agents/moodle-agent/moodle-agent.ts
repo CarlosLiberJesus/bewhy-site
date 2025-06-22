@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject, Input, OnDestroy, OnInit } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { ThemeService } from "../../../../services/theme-service";
 
@@ -9,6 +9,8 @@ import { ThemeService } from "../../../../services/theme-service";
   styleUrl: "./moodle-agent.scss",
 })
 export class MoodleAgent implements OnInit, OnDestroy {
+  @Input() page = "moodle";
+
   private destroy$ = new Subject<void>();
   private themeService = inject(ThemeService);
   isDarkTheme = true;
