@@ -29,12 +29,13 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/animations": "^20.0.4",
+    "@angular/common": "^20.0.4",
+    "@angular/compiler": "^20.0.4",
+    "@angular/core": "^20.0.4",
+    "@angular/forms": "^20.0.4",
+    "@angular/platform-browser": "^20.0.4",
+    "@angular/router": "^20.0.4",
     "lucide-angular": "^0.518.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

@@ -1,5 +1,5 @@
 <div [class]="getTabBarClasses()">
-  <div *ngFor="let tab of tabs" [class]="getTabClasses(tab)">
+  <div *ngFor="let tab of tabs" [@tabAnim] [class]="getTabClasses(tab)">
     <button
       (click)="tabSelected.emit(tab)"
       class="flex items-center px-4 py-3 min-w-0 flex-1"

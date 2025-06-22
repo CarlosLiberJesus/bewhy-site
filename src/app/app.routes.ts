@@ -41,6 +41,11 @@ export const routes: Routes = [
       import("./pages/public/about-us/about-us").then((m) => m.AboutUs),
   },
   {
+    path: "public/politicas-md",
+    loadComponent: () =>
+      import("./pages/public/policies/policies").then((m) => m.Policies),
+  },
+  {
     path: "public/contacte-nos",
     loadComponent: () =>
       import("./pages/public/contacts/contacts").then((m) => m.Contacts),

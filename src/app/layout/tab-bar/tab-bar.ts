@@ -10,6 +10,7 @@ import {
   Server,
   AlertTriangle,
 } from "lucide-angular/src/icons";
+import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
   selector: "app-layout-tab-bar",
@@ -17,6 +18,23 @@ import {
   imports: [CommonModule, LucideAngularModule],
   templateUrl: "./tab-bar.html",
   styleUrl: "./tab-bar.scss",
+  animations: [
+    trigger("tabAnim", [
+      transition(":enter", [
+        style({ opacity: 0, transform: "translateX(32px) scale(0.95)" }),
+        animate(
+          "200ms cubic-bezier(0.4,0,0.2,1)",
+          style({ opacity: 1, transform: "translateX(0) scale(1)" }),
+        ),
+      ]),
+      transition(":leave", [
+        animate(
+          "150ms cubic-bezier(0.4,0,0.2,1)",
+          style({ opacity: 0, transform: "translateY(32px) scale(0.95)" }),
+        ),
+      ]),
+    ]),
+  ],
 })
 export class LayoutTabBar {
   @Input() tabs: string[] = [];

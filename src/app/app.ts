@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { Subject, filter, takeUntil } from "rxjs";
-import { LucideAngularModule, Menu, X } from "lucide-angular";
+import { LucideAngularModule, Menu } from "lucide-angular";
 import { LayoutFileTree } from "./layout/file-tree/file-tree";
 import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
 import { LayoutTabBar } from "./layout/tab-bar/tab-bar";
@@ -25,15 +25,14 @@ import { ThemeService } from "./services/theme-service";
 })
 export class App implements OnInit, OnDestroy {
   sidebarOpen = false;
-  private initialPath: string;
   activeFile: string;
   openTabs: string[];
 
   isDarkTheme = true;
-  private destroy$ = new Subject<void>();
   readonly MenuIcon = Menu;
-  readonly XIcon = X;
 
+  private initialPath: string;
+  private destroy$ = new Subject<void>();
   private router = inject(Router);
   private themeService = inject(ThemeService);
 

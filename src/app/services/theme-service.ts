@@ -8,7 +8,9 @@ export class ThemeService {
 
   private getInitialTheme(): boolean {
     const saved = localStorage.getItem("ide-theme");
-    return saved ? saved === "dark" : true;
+    if (saved) return saved === "dark";
+    // Se não houver, usa a preferência do SO
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   }
 
   setDarkTheme(isDark: boolean) {

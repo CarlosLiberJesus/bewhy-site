@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   LucideAngularModule,
@@ -12,6 +20,8 @@ import {
   Link,
   Server,
 } from "lucide-angular/src/icons";
+import { NavigationEnd, Router } from "@angular/router";
+import { Subject, filter, takeUntil } from "rxjs";
 
 interface FileNode {
   name: string;
@@ -27,28 +37,14 @@ interface FileNode {
   templateUrl: "./file-tree.html",
   styleUrl: "./file-tree.scss",
 })
-export class LayoutFileTree {
+export class LayoutFileTree implements OnInit, OnDestroy {
   @Input() activeFile = "";
   @Input() isDarkTheme = true;
   @Output() fileSelected = new EventEmitter<string>();
 
-  expandedFolders: Set<string>;
-
-  constructor() {
-    // Pega o path da URL (sem barra inicial)
-    const url = window.location.pathname.replace(/^\/+/, "");
-    // Exemplo: "src/ai-agent/moodle-agent/moodle-langchain"
-    // Queremos ["src", "src/ai-agent", "src/ai-agent/moodle-agent"]
-    const segments = url.split("/");
-    const folders: string[] = [];
-    for (let i = 1; i < segments.length; i++) {
-      const folderPath = segments.slice(0, i).join("/");
-      folders.push(folderPath);
-    }
-    // expande "src" se padrão
-    // if (!folders.includes("src")) folders.unshift("src");
-    this.expandedFolders = new Set(folders);
-  }
+  expandedFolders!: Set<string>;
+  private destroy$ = new Subject<void>();
+  private router = inject(Router);
 
   readonly FolderIcon = Folder;
   readonly FolderOpenIcon = FolderOpen;
@@ -61,6 +57,20 @@ export class LayoutFileTree {
   readonly ServerIcon = Server;
 
   fileStructure: FileNode[] = [
+    {
+      name: "public",
+      type: "folder",
+      path: "public",
+      children: [
+        { name: "sobre.org", type: "file", path: "public/sobre-org" },
+        { name: "contacte.nos", type: "file", path: "public/contacte-nos" },
+        {
+          name: "politicas.md",
+          type: "file",
+          path: "public/politicas-md",
+        },
+      ],
+    },
     {
       name: "src",
       type: "folder",
@@ -115,18 +125,44 @@ export class LayoutFileTree {
         },
       ],
     },
-    {
-      name: "public",
-      type: "folder",
-      path: "public",
-      children: [
-        { name: "sobre.org", type: "file", path: "public/sobre-org" },
-        { name: "contacte.nos", type: "file", path: "public/contacte-nos" },
-      ],
-    },
     { name: "README.md", type: "file", path: "readme-md" },
     { name: "site.xml", type: "file", path: "site-xml" },
   ];
+
+  ngOnInit() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((event: NavigationEnd) => {
+        let url = event.url.startsWith("/") ? event.url.slice(1) : event.url;
+        if (!url) {
+          url = "src/web-app/index-angular";
+        }
+        this.setExpandedFolders(url);
+      });
+
+    // Inicializa ao arrancar
+    const initialUrl = this.router.url.startsWith("/")
+      ? this.router.url.slice(1)
+      : this.router.url;
+    this.setExpandedFolders(initialUrl);
+  }
+
+  private setExpandedFolders(url: string) {
+    const segments = url.split("/");
+    const folders: string[] = [];
+    for (let i = 1; i < segments.length; i++) {
+      const folderPath = segments.slice(0, i).join("/");
+      folders.push(folderPath);
+    }
+    //if (!folders.includes("src")) folders.unshift("src");
+    this.expandedFolders = new Set(folders);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   isExpanded(path: string): boolean {
     return this.expandedFolders.has(path);

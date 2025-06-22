@@ -1,23 +1,24 @@
 /** @type {import('tailwindcss').Config} */
-import fluid, { extract, screens, fontSize } from 'fluid-tailwind'
+const fluid = require("fluid-tailwind");
+const { extract, screens, fontSize } = require("fluid-tailwind");
 
 module.exports = {
   content: {
     files: ["./src/**/*.{html,ts,scss}"],
-    extract
+    extract,
   },
   theme: {
-    screens, // Tailwind's default screens, in `rem`
-    fontSize, // Tailwind's default font sizes, in `rem` (including line heights)
+    screens,
+    fontSize,
     extend: {
       screens: {
-        xs: '20rem'
-      }
-    }
+        xs: "20rem",
+      },
+    },
   },
   plugins: [
     fluid,
-    require('@tailwindcss/forms'),      // Para forms bonitos
-    require('@tailwindcss/typography'), // Para .prose
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
   ],
-}
+};

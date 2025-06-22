@@ -27,8 +27,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <app-layout-sidebar-footer>
-        </app-layout-sidebar-footer>
+        <app-layout-sidebar-footer> </app-layout-sidebar-footer>
       </div>
     </div>
 
@@ -45,7 +44,7 @@
       </app-layout-tab-bar>
 
       <!-- Editor Area -->
-      <div class="flex-1 overflow-hidden">
+      <div class="flex-1 overflow-auto">
         <app-system-messages></app-system-messages>
 
         <router-outlet></router-outlet>
@@ -82,9 +81,7 @@
         aria-label="Fechar menu lateral"
         (keydown.enter)="closeSidebar()"
         (keydown.space)="closeSidebar()"
-      >
-        <lucide-icon [img]="XIcon" size="24"></lucide-icon>
-      </button>
+      ></button>
     </div>
   </div>
 </div>
