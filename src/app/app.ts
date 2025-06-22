@@ -1,9 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { Subject } from "rxjs/internal/Subject";
-import { filter } from "rxjs/operators";
-import { takeUntil } from "rxjs/internal/operators/takeUntil";
+import { Subject, filter, takeUntil } from "rxjs";
 import { LucideAngularModule, Menu, X } from "lucide-angular";
 import { LayoutFileTree } from "./layout/file-tree/file-tree";
 import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";

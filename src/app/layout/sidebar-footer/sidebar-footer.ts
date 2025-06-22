@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  inject,
-} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Sun, Moon, User } from "lucide-angular";
 import { ThemeService } from "../../services/theme-service";
@@ -18,8 +11,8 @@ import { ThemeService } from "../../services/theme-service";
   styleUrl: "./sidebar-footer.scss",
 })
 export class LayoutSidebarFooter implements OnInit {
-  @Input() isDarkTheme = true;
-  @Output() themeToggled = new EventEmitter<void>();
+  isDarkTheme = true; // Mantida para lógica interna, mas não mais como @Input
+  // @Output() themeToggled foi removido anteriormente, o que está correto
 
   readonly SunIcon = Sun;
   readonly MoonIcon = Moon;

@@ -1,8 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { Subject } from "rxjs/internal/Subject";
-import { takeUntil } from "rxjs/internal/operators/takeUntil";
+import { Subject, takeUntil } from "rxjs";
 import {
   LucideAngularModule,
   AlertTriangle,
