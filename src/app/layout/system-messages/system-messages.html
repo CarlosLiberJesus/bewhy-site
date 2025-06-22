@@ -1,3 +1,4 @@
+<!--
 <div class="bg-yellow-100 p-5 w-full border-l-4 border-yellow-500">
   <div class="flex space-x-3">
     <svg
@@ -11,6 +12,100 @@
     </svg>
     <div class="flex-1 leading-tight text-sm text-yellow-500">
       Futura secção de avisos e notificações.
+    </div>
+  </div>
+</div>
+
+-->
+
+<div class="pointer-events-none">
+  <div
+    *ngFor="let message of messages; trackBy: trackById"
+    [@messageState]
+    class="p-4 w-full border-l-4 pointer-events-auto"
+    [ngClass]="getMessageClasses(message.type)"
+  >
+    <div class="flex items-start space-x-3">
+      <!-- Icon (Optional - could be dynamic based on type) -->
+      <svg
+        *ngIf="message.type !== SystemMessageType.Cookie"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="flex-none fill-current h-5 w-5"
+        [ngClass]="getIconClasses(message.type)"
+      >
+        <path
+          *ngIf="message.type === SystemMessageType.Warning || message.type === SystemMessageType.Error"
+          d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.001 5.75c.69 0 1.251.56 1.251 1.25s-.561 1.25-1.251 1.25-1.249-.56-1.249-1.25.559-1.25 1.249-1.25zm2.001 12.25h-4v-1c.484-.179 1-.201 1-.735v-4.467c0-.534-.516-.618-1-.797v-1h3v6.265c0 .535.517.558 1 .735v.999z"
+        />
+        <path
+          *ngIf="message.type === SystemMessageType.Info"
+          d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.5 5h3v2h-3v-2zm0 4h3v6h-3v-6z"
+        />
+        <path
+          *ngIf="message.type === SystemMessageType.Success"
+          d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.959 17l-4.5-4.319 1.395-1.435 3.08 2.937 7.021-7.183 1.422 1.409-8.418 8.591z"
+        />
+      </svg>
+      <!-- Cookie Icon (Example: InformationCircleIcon from Heroicons if available, or a simple one) -->
+      <svg
+        *ngIf="message.type === SystemMessageType.Cookie"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="flex-none h-5 w-5"
+        [ngClass]="getIconClasses(message.type)"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+          clip-rule="evenodd"
+        />
+      </svg>
+
+      <div class="flex-1 leading-tight text-sm">
+        <p [innerHTML]="message.text"></p>
+        <a
+          *ngIf="message.link && message.linkText"
+          (click)="handleLinkClick(message.link)"
+          tabindex="1"
+          role="button"
+          aria-label="Abre link interno"
+          (keydown.enter)="handleLinkClick(message.link)"
+          (keydown.space)="handleLinkClick(message.link)"
+          class="font-medium underline hover:text-opacity-80"
+          [ngClass]="{
+             'text-blue-600 dark:text-blue-400': message.type !== SystemMessageType.Cookie,
+             'text-slate-600 dark:text-slate-300': message.type === SystemMessageType.Cookie
+           }"
+        >
+          {{ message.linkText }}
+        </a>
+      </div>
+
+      <div class="flex-none ml-auto">
+        <button
+          *ngIf="message.buttonText"
+          (click)="handleButtonClick(message)"
+          class="px-3 py-1 text-sm font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2"
+          [ngClass]="{
+                  'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-400': message.type !== SystemMessageType.Cookie,
+                  'bg-yellow-500 hover:bg-black text-white focus:ring-yellow-500': message.type === SystemMessageType.Cookie
+                }"
+        >
+          {{ message.buttonText }}
+        </button>
+
+        <button
+          *ngIf="message.closable"
+          (click)="closeMessage(message.id)"
+          class="ml-2 p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-1"
+          [ngClass]="getIconClasses(message.type) + ' focus:ring_current'"
+        >
+          <lucide-icon [img]="CloseIcon" size="18"></lucide-icon>
+          <span class="sr-only">Fechar</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -45,7 +45,9 @@
 
       <!-- Editor Area -->
       <div class="flex-1 overflow-auto">
-        <app-system-messages></app-system-messages>
+        <app-system-messages
+          (cookiesForward)="handleFileSelect($event)"
+        ></app-system-messages>
 
         <router-outlet></router-outlet>
       </div>

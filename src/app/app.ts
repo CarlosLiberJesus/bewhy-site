@@ -8,6 +8,8 @@ import { LayoutSidebarFooter } from "./layout/sidebar-footer/sidebar-footer";
 import { LayoutTabBar } from "./layout/tab-bar/tab-bar";
 import { SystemMessages } from "./layout/system-messages/system-messages";
 import { ThemeService } from "./services/theme-service";
+import { SystemMessage } from "./services/system-message.model";
+import { SystemMessageService } from "./services/system-message-service";
 
 @Component({
   selector: "app-root",
@@ -35,6 +37,9 @@ export class App implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private router = inject(Router);
   private themeService = inject(ThemeService);
+  private systemMessageService = inject(SystemMessageService);
+
+  private readonly COOKIE_CONSENT_KEY = "cookieConsentAccepted";
 
   constructor() {
     // Pega o path da URL (sem barra inicial)
@@ -80,6 +85,41 @@ export class App implements OnInit, OnDestroy {
           : event.url;
         this.activeFile = normalized;
       });
+
+    this.showCookieConsentBanner();
+  }
+
+  private showCookieConsentBanner(): void {
+    try {
+      if (localStorage.getItem(this.COOKIE_CONSENT_KEY) === "true") {
+        return;
+      }
+    } catch (e) {
+      // LocalStorage might be disabled or unavailable
+      console.warn("Could not access localStorage for cookie consent:", e);
+      // Decide if you want to show the banner anyway or not.
+      // For this example, we'll proceed to show it if localStorage is inaccessible.
+    }
+
+    const consentMessageText = `Este site utiliza cookies para melhorar a sua experiência. Ao continuar a navegar está a consentir a sua utilização.`;
+    const privacyPolicyLink = "public/politicas-md"; // Example link
+    const linkText = "Saber mais";
+    const buttonText = "Recusar";
+
+    this.systemMessageService.cookie(
+      consentMessageText,
+      privacyPolicyLink,
+      linkText,
+      buttonText,
+      (message: SystemMessage) => {
+        try {
+          localStorage.setItem(this.COOKIE_CONSENT_KEY, "true");
+        } catch (e) {
+          console.warn("Could not set localStorage for cookie consent:", e);
+        }
+        this.systemMessageService.removeMessage(message.id);
+      },
+    );
   }
 
   toggleSidebar() {
