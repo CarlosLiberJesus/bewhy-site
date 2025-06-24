@@ -26,9 +26,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -57,9 +55,7 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": [
-              "site.local"
-            ]
+            "allowedHosts": ["site.local"]
           },
           "configurations": {
             "production": {
@@ -70,6 +66,26 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "bewhy-site:build:production",
+            "routes": [
+              "/404",
+              "/readme-md",
+              "/site-xml",
+              "/public/contacte-nos",
+              "/public/sobre-org",
+              "/public/politicas-md",
+              "/public/contacte-nos",
+              "/src/web-app/index-angular",
+              "/src/ai-agent/site-bot",
+              "/src/ai-agent/moodle-agent/moodle-chat",
+              "/src/ai-agent/moodle-agent/moodle-langchain",
+              "/src/ai-agent/moodle-agent/moodle-mcp"
+            ]
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
@@ -84,26 +100,19 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   }
 }

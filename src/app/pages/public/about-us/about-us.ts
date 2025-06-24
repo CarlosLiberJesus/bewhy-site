@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { MetaTagService } from "../../../services/meta-tag";
+import { MetaTagService } from "../../../services/meta-tag-service";
 
 @Component({
   selector: "app-about-us",
@@ -14,10 +14,10 @@ export class AboutUs implements OnInit {
 
   ngOnInit(): void {
     this.metaTagService.setPageTags(
-      'Sobre Nós',
-      'Saiba mais sobre a BeWhyOrg, a nossa missão, visão e valores.',
-      'https://www.BeWhyOrg/img/about-us-image.jpg', // URL de imagem específica para "Sobre Nós"
-      ['bewhyorg', 'sobre nós', 'missão', 'visão', 'valores']
+      "Sobre Nós",
+      "Saiba mais sobre a BeWhyOrg, a nossa missão, visão e valores.",
+      "https://www.BeWhyOrg/img/about-us-image.jpg", // URL de imagem específica para "Sobre Nós"
+      ["bewhyorg", "sobre nós", "missão", "visão", "valores"],
     );
   }
 }

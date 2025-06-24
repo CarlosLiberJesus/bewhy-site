@@ -10,7 +10,7 @@ import { SystemMessages } from "./layout/system-messages/system-messages";
 import { ThemeService } from "./services/theme-service";
 import { SystemMessage } from "./services/system-message.model";
 import { SystemMessageService } from "./services/system-message-service";
-import { MetaTagService } from "./services/meta-tag";
+import { MetaTagService } from "./services/meta-tag-service";
 
 @Component({
   selector: "app-root",

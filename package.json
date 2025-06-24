@@ -10,7 +10,10 @@
     "format": "prettier --write \"src/**/*.{ts,html,css,scss}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css,scss}\"",
     "analyze": "ng build --stats-json && npx webpack-bundle-analyzer dist/stats.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build:ssr": "ng build && bewhy-site:server",
+    "build:prerender": "ng build --configuration production && ng run bewhy-site:prerender",
+    "serve:ssr": "node dist/bewhy-site/server/main.js"
   },
   "lint-staged": {
     "src/**/*.{ts,html}": [
