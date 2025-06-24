@@ -1,0 +1,151 @@
+// Contact Component Styles
+// Following the IDE theme pattern with form integration
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+// Smooth transitions for theme switching
+* {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+// Code line styling
+.code-line {
+  min-height: 1.5rem;
+  line-height: 1.5rem;
+  position: relative;
+
+  &:hover {
+    background-color: rgba(156, 163, 175, 0.05);
+  }
+}
+
+.line-number {
+  width: 3rem;
+  text-align: right;
+  padding-right: 1rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-family: "Fira Code", Monaco, Consolas, "Ubuntu Mono", monospace;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.code-content {
+  flex: 1;
+  font-size: 0.875rem;
+  font-family: "Fira Code", Monaco, Consolas, "Ubuntu Mono", monospace;
+  white-space: pre;
+  position: relative;
+}
+
+// Input field container
+.input-field {
+  position: relative;
+
+  .field-input {
+    width: calc(100% - 20px);
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgb(234 179 8 / 1);
+    font-family: "Fira Code", Monaco, Consolas, "Ubuntu Mono", monospace;
+    font-size: 0.875rem;
+    padding: 0 2px;
+    margin: 0 2px;
+    border-bottom: 1px solid transparent;
+
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      border-bottom: 2px inset rgb(234 179 8 / 1);
+      background: rgb(234 179 8 / 0.2);
+    }
+
+    &::placeholder {
+      color: rgb(234 179 8 / 1);
+      font-style: italic;
+    }
+  }
+
+  .message-input {
+    resize: none;
+    overflow: hidden;
+    min-height: 1.5rem;
+    max-height: 6rem;
+  }
+}
+
+// Quote styling
+.quote {
+  color: rgb(234 179 8 / 1);
+  user-select: none;
+}
+
+// Syntax highlighting
+.comment {
+  color: #34d399;
+  font-style: italic;
+}
+
+.code-line .comment {
+  white-space: pre-line;
+  word-break: break-word;
+  display: inline;
+}
+
+.keyword {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.type {
+  color: #10b981;
+}
+
+.property {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.variable {
+  color: #14b8a6;
+}
+
+.boolean {
+  color: #ec4899;
+}
+
+// Auto-resize textarea
+.message-input {
+  transition: height 0.2s ease;
+}
+
+// Button styling
+button {
+  font-family: "Fira Code", Monaco, Consolas, "Ubuntu Mono", monospace;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Dynamic input width based on content
+
+.message-field .field-input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}

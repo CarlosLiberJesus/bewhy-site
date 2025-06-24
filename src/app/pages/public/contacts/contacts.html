@@ -1,1 +1,322 @@
-<p>contacts works!</p>
+<div class="flex flex-col h-full">
+  <!-- Header with file tab -->
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700' : 'bg-gray-200 border-gray-300'"
+    class="border-b px-4 py-2 flex items-center gap-2"
+  >
+    <lucide-angular
+      [img]="FileCodeIcon"
+      class="w-4 h-4 text-teal-500"
+    ></lucide-angular>
+    <span
+      [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-700'"
+      class="text-sm font-mono"
+      >{{ activeFile }}</span
+    >
+    <span class="text-gray-400 text-xs">• Formulário de Contacto</span>
+  </div>
+
+  <!-- Code editor content with form inputs -->
+  <div
+    class="h-full overflow-auto relative font-mono text-sm flex-1 min-h-0"
+    [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-800'"
+  >
+    <div class="p-4">
+      <!-- Line 1 -->
+      <div class="flex code-line">
+        <span class="line-number">1</span>
+        <span class="code-content">
+          <span class="comment">/**</span>
+        </span>
+      </div>
+
+      <!-- Line 2 -->
+      <div class="flex code-line">
+        <span class="line-number">2</span>
+        <span class="code-content">
+          <span class="comment"
+            >&nbsp;* Formulário de Contacto - BeWhy Studio</span
+          >
+        </span>
+      </div>
+
+      <!-- Line 3 -->
+      <div class="flex code-line">
+        <span class="line-number">3</span>
+        <span class="code-content">
+          <span class="comment">
+            &nbsp;* Interface para recolha de informações de contacto</span
+          >
+        </span>
+      </div>
+
+      <!-- Line 3 -->
+      <div class="flex code-line">
+        <span class="line-number">3</span>
+        <span class="code-content">
+          <span class="comment"
+            >&nbsp;*
+            <span
+              class="font-extrabold"
+              [ngClass]="isDarkTheme ? 'text-gray-200': 'text-gray-700'"
+              >{{' @Input '}}</span
+            >
+            <span class="text-yellow-500 font-medium">name</span> - Como quer
+            ser chamado
+          </span>
+        </span>
+      </div>
+
+      <div class="flex code-line">
+        <span class="line-number">3</span>
+        <span class="code-content">
+          <span class="comment"
+            >&nbsp;*
+            <span
+              class="font-extrabold"
+              [ngClass]="isDarkTheme ? 'text-gray-200': 'text-gray-700'"
+              >{{' @Input '}}</span
+            >
+            <span class="text-yellow-500 font-medium">email</span> - Para onde
+            respondemos
+          </span>
+        </span>
+      </div>
+      <div class="flex code-line">
+        <span class="line-number">3</span>
+        <span class="code-content">
+          <span class="comment"
+            >&nbsp;*
+            <span
+              class="font-extrabold"
+              [ngClass]="isDarkTheme ? 'text-gray-200': 'text-gray-700'"
+              >{{' @Input '}}</span
+            >
+            <span class="text-yellow-500 font-medium">message</span> - Conteúdo
+            da mensagem, 10 a 500 caracteres
+          </span>
+        </span>
+      </div>
+
+      <div class="flex code-line">
+        <span class="line-number">3</span>
+        <span class="code-content">
+          <span class="comment"
+            >&nbsp;*
+            <span
+              class="font-extrabold"
+              [ngClass]="isDarkTheme ? 'text-gray-200': 'text-gray-700'"
+              >{{' @Input '}}</span
+            >
+            <span class="text-yellow-500 font-medium">send</span> - Tudo
+            correcto, butão fica activo
+          </span>
+        </span>
+      </div>
+
+      <!-- Line 4 -->
+      <div class="flex code-line">
+        <span class="line-number">4</span>
+        <span class="code-content">
+          <span class="comment">&nbsp;*/</span>
+        </span>
+      </div>
+
+      <!-- Line 5 - Empty -->
+      <div class="flex code-line">
+        <span class="line-number">5</span>
+        <span class="code-content">&nbsp;</span>
+      </div>
+
+      <!-- Line 6 -->
+      <div class="flex code-line">
+        <span class="line-number">6</span>
+        <span class="code-content">
+          <span class="keyword">interface</span>
+          <span class="type pl-2">ContactForm</span> {{ '{' }}
+        </span>
+      </div>
+
+      <!-- Line 7 - Name Field -->
+      <div class="flex code-line">
+        <span class="line-number">7</span>
+        <span class="code-content flex items-start content-start pr-5">
+          &nbsp;&nbsp;<span class="property">name</span>:
+          <span class="input-field w-full name-field">
+            <span class="quote">"</span
+            ><input
+              [(ngModel)]="contactForm.name"
+              placeholder="Digite seu nome..."
+              class="field-input"
+              maxlength="50"
+            /><span class="quote">"</span> </span
+          >;
+        </span>
+      </div>
+
+      <!-- Line 8 - Email Field -->
+      <div class="flex code-line">
+        <span class="line-number">8</span>
+        <span class="code-content flex items-start content-start pr-5">
+          &nbsp;&nbsp;<span class="property">email</span>:
+          <span class="input-field w-full email-field">
+            <span class="quote">"</span
+            ><input
+              [(ngModel)]="contactForm.email"
+              type="email"
+              placeholder="seu.email@exemplo.com"
+              class="field-input"
+              maxlength="100"
+            /><span class="quote">"</span> </span
+          >;
+        </span>
+      </div>
+
+      <!-- Line 9 - Message Field -->
+      <div class="flex code-line items-start content-start">
+        <span class="line-number">9</span>
+        <span class="code-content flex items-start content-start pr-5">
+          &nbsp;&nbsp;<span class="property">message</span>:
+          <span
+            class="input-field w-full message-field flex items-start content-start"
+          >
+            <span class="quote self-start" style="margin-top: 2px">"</span>
+            <textarea
+              [(ngModel)]="contactForm.message"
+              placeholder="Escreva sua mensagem..."
+              class="field-input message-input w-full"
+              maxlength="500"
+              rows="3"
+            ></textarea>
+            <span class="quote self-start" style="margin-top: 2px"
+              >"</span
+            > </span
+          >;
+        </span>
+      </div>
+
+      <!-- Line 10 - Send Field -->
+      <div class="flex code-line">
+        <span class="line-number">10</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">send</span>:
+          <ng-container *ngIf="!isFormValid(); else canSend">
+            <span class="text-red-500 font-mono">!formStatus.isValid</span>
+          </ng-container>
+          <ng-template #canSend>
+            <button
+              (click)="onSubmit()"
+              class="text-green-500 font-mono underline hover:no-underline focus:outline-none bg-transparent border-none cursor-pointer px-1"
+              style="font-size: inherit"
+            >
+              form.submit()
+            </button>
+          </ng-template>
+          ;
+        </span>
+      </div>
+
+      <div class="flex code-line">
+        <span class="line-number">11</span>
+        <span class="code-content">{{ '}' }}</span>
+      </div>
+
+      <!-- Line 11 - Empty -->
+      <div class="flex code-line">
+        <span class="line-number">12</span>
+        <span class="code-content">&nbsp;</span>
+      </div>
+
+      <!-- Line 12 -->
+      <div class="flex code-line">
+        <span class="line-number">13</span>
+        <span class="code-content">
+          <span class="comment">// Estado do formulário</span>
+        </span>
+      </div>
+
+      <!-- Line 13 -->
+      <div class="flex code-line">
+        <span class="line-number">14</span>
+        <span class="code-content">
+          <span class="keyword">const</span>
+          <span class="variable pl-2">formStatus</span> = {{ '{' }}
+        </span>
+      </div>
+
+      <!-- Line 14 -->
+      <div class="flex code-line">
+        <span class="line-number">15</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">isValid</span>:
+          <span class="boolean">{{ isFormValid() }}</span>,
+        </span>
+      </div>
+      <!-- Line 14.1 -->
+      <div class="flex code-line">
+        <span class="line-number">16</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">isValidEmail</span>:
+          <span class="boolean">{{ isEmailValid() }}</span>,
+        </span>
+      </div>
+      <!-- Line 14.2 -->
+      <div class="flex code-line">
+        <span class="line-number">17</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">maxCharsInMessage</span>:
+          <span class="boolean">{{ 500 - contactForm.message.length }}</span>,
+        </span>
+      </div>
+
+      <!-- Line 14.2 -->
+      <div class="flex code-line">
+        <span class="line-number">17</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">minCharsInMessage</span>:
+          <span class="boolean"
+            >{{ (10 - contactForm.message.length) > 0 ? 10 -
+            contactForm.message.length : 0 }}</span
+          >,
+        </span>
+      </div>
+
+      <!-- Line 15 -->
+      <div class="flex code-line">
+        <span class="line-number">18</span>
+        <span class="code-content">
+          &nbsp;&nbsp;<span class="property">canSubmit</span>:
+          <span class="boolean">{{ canSubmit() }}</span>
+        </span>
+      </div>
+
+      <!-- Line 16 -->
+      <div class="flex code-line">
+        <span class="line-number">19</span>
+        <span class="code-content">{{ '}' }};</span>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700 text-gray-400' : 'bg-gray-200 border-gray-300 text-gray-600'"
+    class="border-t px-4 py-1 flex items-center justify-between text-xs font-mono"
+  >
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="FileCodeIcon" class="w-3 h-3"></lucide-angular>
+        TypeScript
+      </span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="MailIcon" class="w-3 h-3"></lucide-angular>
+        Privacidade Garantida
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Linhas: 19</span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="RefreshCwIcon" class="w-3 h-3"></lucide-angular>
+        v1.0.0
+      </span>
+    </div>
+  </div>
+</div>
