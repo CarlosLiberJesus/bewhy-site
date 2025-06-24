@@ -10,6 +10,7 @@ import { SystemMessages } from "./layout/system-messages/system-messages";
 import { ThemeService } from "./services/theme-service";
 import { SystemMessage } from "./services/system-message.model";
 import { SystemMessageService } from "./services/system-message-service";
+import { MetaTagService } from "./services/meta-tag";
 
 @Component({
   selector: "app-root",
@@ -39,6 +40,7 @@ export class App implements OnInit, OnDestroy {
   private router = inject(Router);
   private themeService = inject(ThemeService);
   private systemMessageService = inject(SystemMessageService);
+  private metaTagService = inject(MetaTagService);
 
   private readonly COOKIE_CONSENT_KEY = "cookieConsentAccepted";
 
@@ -73,6 +75,7 @@ export class App implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.metaTagService.setDefaultTags();
     this.themeService.theme$
       .pipe(takeUntil(this.destroy$))
       .subscribe((isDark) => {
