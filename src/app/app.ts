@@ -54,7 +54,9 @@ export class App implements OnInit, OnDestroy {
   }
 
   get themeClass(): string {
-    return this.isDarkTheme ? "bg-black text-white" : "bg-white text-black";
+    return this.isDarkTheme
+      ? "bg-black text-gray-200"
+      : "bg-white text-gray-700";
   }
 
   get sidebarClasses(): string {
@@ -93,7 +95,7 @@ export class App implements OnInit, OnDestroy {
   private showCookieConsentBanner(): void {
     try {
       if (localStorage.getItem(this.COOKIE_CONSENT_KEY) === "true") {
-        // return;
+        return;
       }
     } catch (e) {
       // LocalStorage might be disabled or unavailable

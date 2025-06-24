@@ -99,6 +99,7 @@ A cores têm de usar o `ThemeService` para actualizar as mesmas:
 
 - bg-black
 - bg-gray-800 (hover:bg-gray-700)
+- border-gray-800
 - text-gray-200
 - text-gray-400
 
@@ -106,6 +107,7 @@ A cores têm de usar o `ThemeService` para actualizar as mesmas:
 
 - bg-white
 - bg-gray-200 (hover:bg-gray-100)
+- border-gray-200
 - text-gray-700
 - text-gray-400
 

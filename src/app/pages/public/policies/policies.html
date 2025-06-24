@@ -1,64 +1,62 @@
-<article [class]="getContrast('prose-neutral mx-auto px-4 py-8 max-w-2xl')">
-  <h1>Política de Privacidade</h1>
-  <hr />
-  <p>
-    A sua privacidade é importante para nós. Esta página explica como tratamos
-    os seus dados pessoais e como utilizamos cookies neste site.
-  </p>
+<!--
+  text-blue-500 text-emerald-500 text-yellow-500 text-gray-400 font-semibold italic
+-->
+<div class="flex-1 overflow-hidden">
+  <!-- Header with file tab -->
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700' : 'bg-gray-200 border-gray-300'"
+    class="border-b px-4 py-2 flex items-center gap-2"
+  >
+    <lucide-angular
+      [img]="ShieldIcon"
+      class="w-4 h-4 text-yellow-500"
+    ></lucide-angular>
+    <span
+      [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-700'"
+      class="text-sm font-mono"
+      >{{ activeFile }}</span
+    >
+    <span class="text-gray-400 text-xs">• Política de Privacidade</span>
+  </div>
 
-  <h2>1. Dados Pessoais</h2>
-  <hr />
-  <p>
-    Não recolhemos dados pessoais identificáveis dos utilizadores, exceto quando
-    necessário para funcionalidades essenciais, como o formulário de contacto
-    protegido por Google reCAPTCHA.
-  </p>
-  <p>
-    Não partilhamos, vendemos ou transmitimos os seus dados a terceiros, nem
-    utilizamos serviços de vendors externos para análise, publicidade ou
-    tracking.
-  </p>
+  <!-- Code editor content -->
+  <div class="h-full overflow-auto">
+    <div class="pt-3">
+      <div
+        *ngFor="let line of formattedContent; let i = index"
+        class="flex hover:bg-opacity-5"
+        [ngClass]="isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-600'"
+      >
+        <div [class]="getLineNumberClasses()">{{ i + 1 }}</div>
+        <div
+          [class]="getContentClasses()"
+          [innerHTML]="getHighlightedLine(line || ' ')"
+        ></div>
+      </div>
+    </div>
+  </div>
 
-  <h2>2. Cookies e Armazenamento Local</h2>
-  <hr />
-  <p>
-    Este site utiliza apenas cookies e armazenamento local estritamente
-    necessários para o seu funcionamento:
-  </p>
-  <ul>
-    <li>
-      <strong>Preferência de Tema:</strong> Guardamos localmente a sua escolha
-      de tema (claro/escuro) para melhorar a sua experiência de navegação.
-    </li>
-    <li>
-      <strong>Google reCAPTCHA:</strong> Pode ser utilizado para proteger
-      formulários contra spam e abuso. O reCAPTCHA pode definir cookies próprios
-      para garantir a segurança.
-    </li>
-  </ul>
-  <p>
-    Não utilizamos cookies de rastreamento, publicidade ou análise de terceiros.
-  </p>
-
-  <h2>3. Segurança</h2>
-  <hr />
-  <p>
-    Empenhamo-nos em proteger os seus dados e a sua navegação. Apenas utilizamos
-    tecnologias e práticas seguras, minimizando a recolha de informação ao
-    estritamente necessário.
-  </p>
-
-  <h2>4. Contacto</h2>
-  <hr />
-  <p>
-    Se tiver dúvidas sobre esta política, por favor contacte-nos através do
-    formulário disponível no site.
-  </p>
-
-  <h2>5. Alterações a esta Política</h2>
-  <hr />
-  <p>
-    Esta política pode ser atualizada ocasionalmente. Recomendamos que a
-    consulte periodicamente.
-  </p>
-</article>
+  <!-- Footer with file info -->
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700 text-gray-400' : 'bg-gray-200 border-gray-300 text-gray-600'"
+    class="border-t px-4 py-1 flex items-center justify-between text-xs font-mono"
+  >
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="FileCodeIcon" class="w-3 h-3"></lucide-angular>
+        TypeScript
+      </span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="LockIcon" class="w-3 h-3"></lucide-angular>
+        Privacidade Garantida
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Linhas: {{ formattedContent.length }}</span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="RefreshCwIcon" class="w-3 h-3"></lucide-angular>
+        v1.0.0
+      </span>
+    </div>
+  </div>
+</div>

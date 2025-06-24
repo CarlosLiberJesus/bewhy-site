@@ -1,10 +1,68 @@
 <div class="flex-1 overflow-hidden">
-  <div class="h-full overflow-auto">
-    <div class="pt-3">
-      <div *ngFor="let line of formattedContent; let i = index" class="flex">
+  <!-- Header -->
+  <div
+    [ngClass]="getHeaderClasses()"
+    class="border-b px-4 py-2 flex items-center gap-2"
+  >
+    <lucide-angular
+      [img]="FileTextIcon"
+      class="w-4 h-4 text-yellow-500"
+    ></lucide-angular>
+    <span
+      [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-700'"
+      class="text-sm font-mono"
+      >{{ activeFile }}</span
+    >
+    <span class="text-gray-400 text-xs">• README</span>
+  </div>
+
+  <!-- Banner (centrado, sem scroll-x, pouco espaço em baixo) -->
+  <div class="flex justify-center">
+    <pre
+      class="font-mono text-xs md:text-sm leading-tight select-none mb-1 text-center"
+    >
+{{ bannerContent[activeFile] }}
+  </pre
+    >
+  </div>
+
+  <!-- Content -->
+  <div class="h-full overflow-y-auto px-2">
+    <div class="pt-2">
+      <div
+        *ngFor="let line of formattedContent; let i = index"
+        class="flex items-start"
+      >
         <div [class]="getLineNumberClasses()">{{ i + 1 }}</div>
-        <div [class]="getContentClasses()">{{ line || ' ' }}</div>
+        <div
+          [class]="getContentClasses()"
+          [innerHTML]="getIndentedLine(line || ' ')"
+        ></div>
       </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div
+    [ngClass]="getFooterClasses()"
+    class="border-t px-4 py-1 flex items-center justify-between text-xs font-mono"
+  >
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="FileCodeIcon" class="w-3 h-3"></lucide-angular>
+        Markdown
+      </span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="LockIcon" class="w-3 h-3"></lucide-angular>
+        Aberto
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Linhas: {{ formattedContent.length }}</span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="RefreshCwIcon" class="w-3 h-3"></lucide-angular>
+        v1.0.0
+      </span>
     </div>
   </div>
 </div>
