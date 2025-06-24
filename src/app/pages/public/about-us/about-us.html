@@ -1,1 +1,59 @@
-<p>about-us works!</p>
+<div class="flex flex-col h-full pr-5">
+  <!-- Header com file tab -->
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700' : 'bg-gray-200 border-gray-300'"
+    class="border-b px-4 py-2 flex items-center gap-2"
+  >
+    <lucide-angular
+      [img]="TargetIcon"
+      class="w-4 h-4 text-yellow-500"
+    ></lucide-angular>
+    <span
+      [ngClass]="isDarkTheme ? 'text-gray-200' : 'text-gray-700'"
+      class="text-sm font-mono"
+      >{{ activeFile }}</span
+    >
+    <span class="text-gray-400 text-xs">• Sobre Nós</span>
+  </div>
+
+  <!-- Code editor content -->
+  <div class="h-full overflow-auto">
+    <div class="pt-3">
+      <div
+        *ngFor="let line of formattedContent; let i = index"
+        class="flex hover:bg-opacity-5"
+        [ngClass]="isDarkTheme ? 'hover:bg-gray-400' : 'hover:bg-gray-600'"
+      >
+        <div [class]="getLineNumberClasses()">{{ i + 1 }}</div>
+        <div
+          [class]="getContentClasses()"
+          [innerHTML]="getHighlightedLine(line || ' ')"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer com file info -->
+  <div
+    [ngClass]="isDarkTheme ? 'bg-gray-800 border-gray-700 text-gray-400' : 'bg-gray-200 border-gray-300 text-gray-600'"
+    class="border-t px-4 py-1 flex items-center justify-between text-xs font-mono"
+  >
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="TargetIcon" class="w-3 h-3"></lucide-angular>
+        TypeScript
+      </span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="RefreshCwIcon" class="w-3 h-3"></lucide-angular>
+        Evolução Contínua
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Linhas: {{ formattedContent.length }}</span>
+      <span class="flex items-center gap-1">
+        <lucide-angular [img]="MegaphoneIcon" class="w-3 h-3"></lucide-angular>
+        BeWhyOrg
+      </span>
+    </div>
+  </div>
+</div>
