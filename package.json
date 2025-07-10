@@ -1,35 +1,82 @@
 {
   "name": "bewhy-site",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "ng lint",
+    "format": "prettier --write \"src/**/*.{ts,html,css,scss}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss}\"",
+    "analyze": "ng build --stats-json && npx webpack-bundle-analyzer dist/stats.json",
+    "prepare": "husky",
+    "build:ssr": "ng build && bewhy-site:server",
+    "build:prerender": "ng build --configuration production && ng run bewhy-site:prerender",
+    "serve:ssr": "node dist/bewhy-site/server/main.js"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,scss,json}": [
+      "prettier --write"
+    ]
   },
   "private": true,
+  "browserslist": [
+    "last 2 versions",
+    "> 0.5%",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/animations": "^20.0.4",
+    "@angular/common": "^20.0.4",
+    "@angular/compiler": "^20.0.4",
+    "@angular/core": "^20.0.4",
+    "@angular/forms": "^20.0.4",
+    "@angular/platform-browser": "^20.0.4",
+    "@angular/router": "^20.0.4",
+    "lucide-angular": "^0.518.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^20.0.0",
+    "@angular-devkit/build-angular": "^20.0.2",
     "@angular/build": "^20.0.2",
     "@angular/cli": "^20.0.2",
     "@angular/compiler-cli": "^20.0.0",
-    "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.7.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.8.2"
+    "@babel/preset-env": "^7.28.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/jest": "^30.0.0",
+    "angular-eslint": "20.1.0",
+    "autoprefixer": "^10.4.21",
+    "babel-jest": "^30.0.4",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.0",
+    "fluid-tailwind": "^1.0.4",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.6.0",
+    "jest-transform-stub": "^2.0.0",
+    "lint-staged": "^16.1.2",
+    "postcss": "^8.5.6",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tailwindcss": "^3.4.3",
+    "ts-jest": "^29.4.0",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "8.34.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
