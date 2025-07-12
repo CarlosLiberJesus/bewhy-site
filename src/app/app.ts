@@ -262,9 +262,9 @@ export class App implements AfterViewInit, OnDestroy {
     ctx: CanvasRenderingContext2D,
   ) => {
     const computedStyle = getComputedStyle(canvas);
-    const accent = computedStyle.getPropertyValue('--accent').trim();
-    const gold = computedStyle.getPropertyValue('--gold').trim();
-    const secondary = computedStyle.getPropertyValue('--secondary').trim();
+    const particleAccent = computedStyle.getPropertyValue('--particle-accent').trim();
+    const particleGold = computedStyle.getPropertyValue('--particle-gold').trim();
+    const particleSecondary = computedStyle.getPropertyValue('--particle-secondary').trim();
     const neutral = computedStyle.getPropertyValue('--neutral').trim();
 
     // Limpar canvas
@@ -273,7 +273,7 @@ export class App implements AfterViewInit, OnDestroy {
     // Atualizar partículas
     this.particles.forEach((particle) => {
       particle.update();
-      particle.draw(ctx, accent, gold, secondary);
+      particle.draw(ctx, particleAccent, particleGold, particleSecondary);
     });
 
     // Desenhar conexões
