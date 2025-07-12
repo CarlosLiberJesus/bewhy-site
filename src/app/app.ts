@@ -167,11 +167,11 @@ export class App implements AfterViewInit, OnDestroy {
       gold: '#D4C2A8', // Dourado suave
     },
     light: {
-      primary: '#E8E3E1', // Pérola (troca com ameixa)
-      secondary: '#210810', // Ameixa
-      accent: '#A75A7B', // Rosa ameixa
-      neutral: '#4A4A4A', // Cinza escuro
-      gold: '#D4C2A8', // Dourado suave
+      primary: '#F5F5F5', // Um branco mais suave
+      secondary: '#333333', // Um cinza escuro para texto
+      accent: '#8E44AD', // Um roxo vibrante
+      neutral: '#CCCCCC', // Um cinza claro para elementos neutros
+      gold: '#B8860B', // Um dourado mais escuro e rico
     },
   };
 

@@ -23,28 +23,32 @@
   </button>
 
   <!-- Exemplo de conteúdo hero -->
-  <div class="relative z-10 flex items-center justify-center min-h-screen p-8">
-    <div class="text-center max-w-4xl">
+  <div
+    class="relative z-10 flex items-center justify-center min-h-screen p-8"
+  >
+    <div class="text-center max-w-4xl flex flex-col items-center gap-y-8">
       <h1
-        class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent"
-        [ngStyle]="{ 
-          textShadow: '0 0 20px ' + currentColors.accent + '40' 
+        class="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent"
+        [ngStyle]="{
+          textShadow: '0 0 30px ' + currentColors.accent + '50'
         }"
       >
         AI Agents
       </h1>
       <p
-        class="text-xl md:text-2xl mb-8 opacity-90"
-        [ngStyle]="{ color: currentColors.secondary }"
+        class="text-xl md:text-2xl opacity-90 max-w-2xl"
+        [ngStyle]="{
+          color: currentColors.secondary
+        }"
       >
         Transformando o futuro com inteligência artificial
       </p>
       <button
-        class="px-8 py-4 rounded-lg font-semibold text-white backdrop-blur-sm border transition-all duration-300 hover:scale-105"
-        [ngStyle]="{ 
+        class="px-10 py-5 rounded-lg font-semibold text-white backdrop-blur-sm border transition-all duration-300 hover:scale-105"
+        [ngStyle]="{
           backgroundColor: currentColors.accent + 'CC',
           borderColor: currentColors.accent,
-          boxShadow: '0 0 20px ' + currentColors.accent + '40'
+          boxShadow: '0 0 30px ' + currentColors.accent + '50'
         }"
       >
         Descobrir Mais
