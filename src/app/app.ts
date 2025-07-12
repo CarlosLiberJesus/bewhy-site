@@ -80,7 +80,7 @@ class Particle3D {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D, currentColors: any) {
+  draw(ctx: CanvasRenderingContext2D, accentColor: string, goldColor: string, secondaryColor: string) {
     // Perspectiva 3D
     const scale = 1000 / (1000 + this.z);
     const x = this.x * scale;
@@ -99,11 +99,11 @@ class Particle3D {
     // Escolha da cor baseada na profundidade
     let color;
     if (this.z < 300) {
-      color = currentColors.accent;
+      color = accentColor;
     } else if (this.z < 600) {
-      color = currentColors.gold;
+      color = goldColor;
     } else {
-      color = currentColors.secondary;
+      color = secondaryColor;
     }
 
     ctx.fillStyle = color;
@@ -157,27 +157,6 @@ export class App implements AfterViewInit, OnDestroy {
   private particles: Particle3D[] = [];
   private animationId?: number;
 
-  // Cores do tema
-  public colors = {
-    dark: {
-      primary: '#210810', // Ameixa
-      secondary: '#E8E3E1', // Pérola
-      accent: '#A75A7B', // Rosa ameixa
-      neutral: '#4A4A4A', // Cinza escuro
-      gold: '#D4C2A8', // Dourado suave
-    },
-    light: {
-      primary: '#F5F5F5', // Um branco mais suave
-      secondary: '#333333', // Um cinza escuro para texto
-      accent: '#8E44AD', // Um roxo vibrante
-      neutral: '#CCCCCC', // Um cinza claro para elementos neutros
-      gold: '#B8860B', // Um dourado mais escuro e rico
-    },
-  };
-
-  public get currentColors() {
-    return this.colors[this.isDarkMode ? 'dark' : 'light'];
-  }
 
   public setIsDarkMode(value: boolean) {
     this.isDarkMode = value;
@@ -232,6 +211,7 @@ export class App implements AfterViewInit, OnDestroy {
   private drawConnections(
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
+    neutralColor: string
   ) {
     const maxDistance = 150;
 
@@ -264,7 +244,7 @@ export class App implements AfterViewInit, OnDestroy {
           const opacity =
             (1 - distance / maxDistance) * 0.3 * Math.min(scale1, scale2);
 
-          ctx.strokeStyle = `${this.currentColors.neutral}${Math.floor(
+          ctx.strokeStyle = `${neutralColor}${Math.floor(
             opacity * 255,
           )
             .toString(16)
@@ -281,17 +261,23 @@ export class App implements AfterViewInit, OnDestroy {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
   ) => {
+    const computedStyle = getComputedStyle(canvas);
+    const accent = computedStyle.getPropertyValue('--accent').trim();
+    const gold = computedStyle.getPropertyValue('--gold').trim();
+    const secondary = computedStyle.getPropertyValue('--secondary').trim();
+    const neutral = computedStyle.getPropertyValue('--neutral').trim();
+
     // Limpar canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Atualizar partículas
     this.particles.forEach((particle) => {
       particle.update();
-      particle.draw(ctx, this.currentColors);
+      particle.draw(ctx, accent, gold, secondary);
     });
 
     // Desenhar conexões
-    this.drawConnections(ctx, canvas);
+    this.drawConnections(ctx, canvas, neutral);
 
     // Continuar animação
     this.animationId = requestAnimationFrame(() => this.animate(canvas, ctx));

@@ -3,3 +3,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: '';
+  --secondary: '';
+  --accent: '';
+  --neutral: '';
+  --gold: '';
+}
+
+.dark-theme {
+  --primary: #210810;
+  --secondary: #E8E3E1;
+  --accent: #A75A7B;
+  --neutral: #4A4A4A;
+  --gold: #D4C2A8;
+}
+
+.light-theme {
+  --primary: #E8E3E1;
+  --secondary: #210810;
+  --accent: #A75A7B;
+  --neutral: #4A4A4A;
+  --gold: #D4C2A8;
+}
