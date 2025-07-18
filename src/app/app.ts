@@ -52,6 +52,34 @@ class Particle3D {
     this.canvas = canvas;
   }
 
+  // Função auxiliar para interpolar cores
+  private interpolateColor(
+    color1: string,
+    color2: string,
+    factor: number,
+  ): string {
+    // Remover # se presente
+    const cleanColor1 = color1.replace('#', '');
+    const cleanColor2 = color2.replace('#', '');
+
+    // Converter para RGB
+    const r1 = parseInt(cleanColor1.substr(0, 2), 16);
+    const g1 = parseInt(cleanColor1.substr(2, 2), 16);
+    const b1 = parseInt(cleanColor1.substr(4, 2), 16);
+
+    const r2 = parseInt(cleanColor2.substr(0, 2), 16);
+    const g2 = parseInt(cleanColor2.substr(2, 2), 16);
+    const b2 = parseInt(cleanColor2.substr(4, 2), 16);
+
+    // Interpolar
+    const r = Math.round(r1 + factor * (r2 - r1));
+    const g = Math.round(g1 + factor * (g2 - g1));
+    const b = Math.round(b1 + factor * (b2 - b1));
+
+    // Converter de volta para hex
+    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  }
+
   update() {
     // Movimento caótico
     this.x += this.vx;
@@ -80,7 +108,12 @@ class Particle3D {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D, accentColor: string, goldColor: string, secondaryColor: string) {
+  draw(
+    ctx: CanvasRenderingContext2D,
+    accentColor: string,
+    goldColor: string,
+    secondaryColor: string,
+  ) {
     // Perspectiva 3D
     const scale = 1000 / (1000 + this.z);
     const x = this.x * scale;
@@ -96,14 +129,29 @@ class Particle3D {
     ctx.rotate(this.rotationX);
     ctx.globalAlpha = pulseOpacity;
 
-    // Escolha da cor baseada na profundidade
+    // Sistema de cores mais dinâmico baseado na profundidade
     let color;
-    if (this.z < 300) {
+    const depthRatio = this.z / 1000; // Normalizar para 0-1
+
+    if (this.z < 200) {
+      // Partículas muito próximas - accent puro
       color = accentColor;
+    } else if (this.z < 400) {
+      // Transição suave entre accent e gold
+      const factor = (this.z - 200) / 200;
+      color = this.interpolateColor(accentColor, goldColor, factor);
     } else if (this.z < 600) {
+      // Partículas médias - gold puro
       color = goldColor;
+    } else if (this.z < 800) {
+      // Transição suave entre gold e secondary
+      const factor = (this.z - 600) / 200;
+      color = this.interpolateColor(goldColor, secondaryColor, factor);
     } else {
-      color = secondaryColor;
+      // Partículas distantes - secondary com fade baseado na distância
+      const fadeIntensity = 0.3 + (1 - depthRatio) * 0.7; // Entre 0.3 e 1.0
+      const alpha = Math.floor(fadeIntensity * 255);
+      color = secondaryColor + alpha.toString(16).padStart(2, '0');
     }
 
     ctx.fillStyle = color;
@@ -156,7 +204,6 @@ export class App implements AfterViewInit, OnDestroy {
 
   private particles: Particle3D[] = [];
   private animationId?: number;
-
 
   public setIsDarkMode(value: boolean) {
     this.isDarkMode = value;
@@ -211,7 +258,8 @@ export class App implements AfterViewInit, OnDestroy {
   private drawConnections(
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
-    neutralColor: string
+    neutralColor: string,
+    accentColor: string,
   ) {
     const maxDistance = 150;
 
@@ -241,15 +289,17 @@ export class App implements AfterViewInit, OnDestroy {
           ctx.lineTo(x2, y2);
 
           // Opacidade baseada na distância e profundidade
-          const opacity =
-            (1 - distance / maxDistance) * 0.3 * Math.min(scale1, scale2);
+          const baseOpacity =
+            (1 - distance / maxDistance) * Math.min(scale1, scale2);
+          const opacity = baseOpacity * 0.4; // Aumentar visibilidade das conexões
 
-          ctx.strokeStyle = `${neutralColor}${Math.floor(
-            opacity * 255,
-          )
-            .toString(16)
-            .padStart(2, '0')}`;
-          ctx.lineWidth = 0.5;
+          // Usar cor neutra para conexões normais, accent para conexões próximas
+          const connectionColor =
+            distance < maxDistance * 0.5 ? accentColor : neutralColor;
+          const alpha = Math.floor(opacity * 255);
+
+          ctx.strokeStyle = `${connectionColor}${alpha.toString(16).padStart(2, '0')}`;
+          ctx.lineWidth = 0.8; // Linha um pouco mais grossa
           ctx.stroke();
         }
       }
@@ -261,11 +311,28 @@ export class App implements AfterViewInit, OnDestroy {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
   ) => {
-    const computedStyle = getComputedStyle(canvas);
-    const particleAccent = computedStyle.getPropertyValue('--particle-accent').trim();
-    const particleGold = computedStyle.getPropertyValue('--particle-gold').trim();
-    const particleSecondary = computedStyle.getPropertyValue('--particle-secondary').trim();
+    // Obter cores CSS dinamicamente a cada frame para refletir mudanças de tema
+    const canvasElement = this.canvasRef.nativeElement;
+    const computedStyle = getComputedStyle(
+      canvasElement.parentElement || canvasElement,
+    );
+
+    const particleAccent = computedStyle
+      .getPropertyValue('--particle-accent')
+      .trim();
+    const particleGold = computedStyle
+      .getPropertyValue('--particle-gold')
+      .trim();
+    const particleSecondary = computedStyle
+      .getPropertyValue('--particle-secondary')
+      .trim();
     const neutral = computedStyle.getPropertyValue('--neutral').trim();
+
+    // Verificar se as cores foram obtidas corretamente
+    const accentColor = particleAccent || '#A75A7B';
+    const goldColor = particleGold || '#D4C2A8';
+    const secondaryColor = particleSecondary || '#E8E3E1';
+    const neutralColor = neutral || '#4A4A4A';
 
     // Limpar canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -273,11 +340,11 @@ export class App implements AfterViewInit, OnDestroy {
     // Atualizar partículas
     this.particles.forEach((particle) => {
       particle.update();
-      particle.draw(ctx, particleAccent, particleGold, particleSecondary);
+      particle.draw(ctx, accentColor, goldColor, secondaryColor);
     });
 
     // Desenhar conexões
-    this.drawConnections(ctx, canvas, neutral);
+    this.drawConnections(ctx, canvas, neutralColor, accentColor);
 
     // Continuar animação
     this.animationId = requestAnimationFrame(() => this.animate(canvas, ctx));
