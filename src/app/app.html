@@ -1,54 +1,377 @@
-<div class="fixed inset-0 w-full h-full -z-10 overflow-hidden">
-  <!-- Background gradiente -->
-  <div
-    class="absolute inset-0 opacity-90"
-    [ngStyle]="{
-      background: currentColors.primary
-    }"
-  ></div>
+<!-- Header fixo -->
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-all duration-300"
+        [class]="'bg-' + currentTheme() + '-primary/80 border-' + currentTheme() + '-accent/20'">
+  <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="text-2xl font-bold transition-colors duration-300"
+         [class]="'text-' + currentTheme() + '-secondary'">
+      BeWhy
+    </div>
 
-  <!-- Canvas para animação -->
-  <canvas
-    #animationCanvas
-    class="absolute inset-0 w-full h-full"
-    [ngStyle]="{ mixBlendMode: 'screen' }"
-  ></canvas>
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex items-center space-x-8">
+      <button (click)="scrollToSection('inicio')" 
+              class="nav-link transition-colors duration-300 hover:opacity-80"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Início
+      </button>
+      <button (click)="scrollToSection('servicos')" 
+              class="nav-link transition-colors duration-300 hover:opacity-80"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Serviços
+      </button>
+      <button (click)="scrollToSection('contactos')" 
+              class="nav-link transition-colors duration-300 hover:opacity-80"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Contactos
+      </button>
+    </div>
 
-  <!-- Controle de tema (apenas para demonstração) -->
-  <button
-    (click)="setIsDarkMode(!isDarkMode)"
-    class="fixed top-4 right-4 z-50 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors"
-  >
-    {{ isDarkMode ? '☀️ Light' : '🌙 Dark' }}
-  </button>
+    <!-- Theme Switcher + Menu Mobile -->
+    <div class="flex items-center space-x-4">
+      <!-- Theme Toggle -->
+      <button (click)="toggleTheme()" 
+              class="p-2 rounded-lg transition-all duration-300 hover:scale-105"
+              [class]="'bg-' + currentTheme() + '-accent/20 text-' + currentTheme() + '-secondary'">
+        {{ isDarkMode() ? '☀️' : '🌙' }}
+      </button>
 
-  <!-- Exemplo de conteúdo hero -->
-  <div class="relative z-10 flex items-center justify-center min-h-screen p-8">
-    <div class="text-center max-w-4xl">
-      <h1
-        class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent"
-        [ngStyle]="{ 
-          textShadow: '0 0 20px ' + currentColors.accent + '40' 
-        }"
-      >
-        AI Agents
-      </h1>
-      <p
-        class="text-xl md:text-2xl mb-8 opacity-90"
-        [ngStyle]="{ color: currentColors.secondary }"
-      >
-        Transformando o futuro com inteligência artificial
-      </p>
-      <button
-        class="px-8 py-4 rounded-lg font-semibold text-white backdrop-blur-sm border transition-all duration-300 hover:scale-105"
-        [ngStyle]="{ 
-          backgroundColor: currentColors.accent + 'CC',
-          borderColor: currentColors.accent,
-          boxShadow: '0 0 20px ' + currentColors.accent + '40'
-        }"
-      >
-        Descobrir Mais
+      <!-- Menu Mobile -->
+      <button (click)="toggleMobileMenu()" 
+              class="md:hidden p-2 rounded-lg transition-all duration-300"
+              [class]="'bg-' + currentTheme() + '-accent/20 text-' + currentTheme() + '-secondary'">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                [attr.d]="mobileMenuOpen() ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menu Mobile Dropdown -->
+  <div class="md:hidden overflow-hidden transition-all duration-300"
+       [class]="mobileMenuOpen() ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'"
+       [ngClass]="'bg-' + currentTheme() + '-primary/95 backdrop-blur-md'">
+    <div class="px-6 py-4 space-y-4">
+      <button (click)="scrollToSection('inicio'); toggleMobileMenu()" 
+              class="block w-full text-left transition-colors duration-300"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Início
+      </button>
+      <button (click)="scrollToSection('servicos'); toggleMobileMenu()" 
+              class="block w-full text-left transition-colors duration-300"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Serviços
+      </button>
+      <button (click)="scrollToSection('contactos'); toggleMobileMenu()" 
+              class="block w-full text-left transition-colors duration-300"
+              [class]="'text-' + currentTheme() + '-secondary'">
+        Contactos
       </button>
     </div>
   </div>
-</div>
+</header>
+
+<!-- Container principal com scroll snap -->
+<main class="snap-container" [class.snap-disabled]="isMobile()">
+  
+  <!-- Seção 1 - Chat Interface -->
+  <section id="inicio" class="snap-section relative overflow-hidden">
+    <!-- Background gradient -->
+    <div class="absolute inset-0 transition-all duration-500"
+         [ngStyle]="{
+           background: 'linear-gradient(135deg, ' + 
+                      getThemeColor('primary') + ' 0%, ' + 
+                      getThemeColor('primary') + 'CC 50%, ' + 
+                      getThemeColor('accent') + '40 100%)'
+         }">
+    </div>
+
+    <!-- Conteúdo da seção -->
+    <div class="relative z-10 h-full flex items-center justify-center p-6">
+      
+      <!-- Estado inicial do chat -->
+      <div *ngIf="chatMode() === 'initial'" 
+           class="w-full max-w-2xl text-center space-y-8 animate-fade-in">
+        
+        <h1 class="text-4xl md:text-6xl font-bold mb-8 transition-colors duration-300"
+            [class]="'text-' + currentTheme() + '-secondary'">
+          Transforme Ideias em Realidade
+        </h1>
+        
+        <div class="space-y-6">
+          <textarea 
+            [(ngModel)]="currentMessage"
+            placeholder="Descreva seu projeto ou ideia..."
+            class="w-full h-32 p-4 rounded-xl border-2 transition-all duration-300 resize-none focus:outline-none focus:ring-2"
+            [class]="'bg-' + currentTheme() + '-secondary/10 border-' + currentTheme() + '-accent/30 text-' + currentTheme() + '-secondary placeholder-' + currentTheme() + '-secondary/60 focus:border-' + currentTheme() + '-accent focus:ring-' + currentTheme() + '-accent/20'"
+            (keydown.enter)="$event.ctrlKey && startChat()">
+          </textarea>
+          
+          <button (click)="startChat()" 
+                  [disabled]="!currentMessage().trim()"
+                  class="px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  [class]="'bg-' + currentTheme() + '-accent text-white shadow-lg hover:shadow-xl'">
+            Iniciar Chat
+          </button>
+        </div>
+      </div>
+
+      <!-- Interface de chat -->
+      <div *ngIf="chatMode() === 'conversation'" 
+           class="w-full max-w-4xl h-full flex flex-col animate-slide-up">
+        
+        <!-- Área de mensagens -->
+        <div #chatContainer 
+             class="flex-1 overflow-y-auto p-6 space-y-4 scroll-smooth">
+          
+          <div *ngFor="let message of messages(); trackBy: trackByMessage" 
+               class="flex animate-message-in"
+               [class.justify-end]="message.isUser">
+            
+            <div class="max-w-xs md:max-w-md p-4 rounded-2xl transition-all duration-300"
+                 [class]="message.isUser ? 
+                   'bg-' + currentTheme() + '-accent text-white rounded-br-md' : 
+                   'bg-' + currentTheme() + '-secondary/10 text-' + currentTheme() + '-secondary rounded-bl-md'">
+              {{ message.text }}
+            </div>
+          </div>
+
+          <!-- Indicador de digitação -->
+          <div *ngIf="isTyping()" class="flex justify-start animate-pulse">
+            <div class="p-4 rounded-2xl rounded-bl-md"
+                 [class]="'bg-' + currentTheme() + '-secondary/10'">
+              <div class="flex space-x-1">
+                <div class="w-2 h-2 rounded-full animate-bounce"
+                     [class]="'bg-' + currentTheme() + '-accent'"
+                     style="animation-delay: 0ms"></div>
+                <div class="w-2 h-2 rounded-full animate-bounce"
+                     [class]="'bg-' + currentTheme() + '-accent'"
+                     style="animation-delay: 150ms"></div>
+                <div class="w-2 h-2 rounded-full animate-bounce"
+                     [class]="'bg-' + currentTheme() + '-accent'"
+                     style="animation-delay: 300ms"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input de nova mensagem -->
+        <div class="p-6 border-t"
+             [class]="'border-' + currentTheme() + '-accent/20'">
+          <div class="flex space-x-4">
+            <input 
+              [(ngModel)]="currentMessage"
+              placeholder="Digite sua mensagem..."
+              class="flex-1 p-3 rounded-xl border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+              [class]="'bg-' + currentTheme() + '-secondary/10 border-' + currentTheme() + '-accent/30 text-' + currentTheme() + '-secondary placeholder-' + currentTheme() + '-secondary/60 focus:border-' + currentTheme() + '-accent focus:ring-' + currentTheme() + '-accent/20'"
+              (keydown.enter)="sendMessage()">
+            
+            <button (click)="sendMessage()" 
+                    [disabled]="!currentMessage().trim() || isTyping()"
+                    class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    [class]="'bg-' + currentTheme() + '-accent text-white'">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 2 - Serviços -->
+  <section id="servicos" class="snap-section relative">
+    <!-- Background -->
+    <div class="absolute inset-0 transition-all duration-500"
+         [class]="'bg-' + currentTheme() + '-primary'">
+    </div>
+
+    <div class="relative z-10 h-full flex flex-col justify-center p-6">
+      <!-- Header da seção -->
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 transition-colors duration-300"
+            [class]="'text-' + currentTheme() + '-secondary'">
+          Nossos Serviços
+        </h2>
+        <p class="text-lg opacity-80 transition-colors duration-300"
+           [class]="'text-' + currentTheme() + '-secondary'">
+          Soluções personalizadas para suas necessidades
+        </p>
+      </div>
+
+      <!-- Carrossel de serviços -->
+      <div class="relative max-w-6xl mx-auto w-full">
+        <!-- Container do carrossel -->
+        <div class="overflow-hidden rounded-2xl">
+          <div class="flex transition-transform duration-500 ease-in-out"
+               [style.transform]="'translateX(-' + (currentServiceIndex() * 100) + '%)'">
+            
+            <div *ngFor="let service of services; let i = index" 
+                 class="w-full flex-shrink-0 p-8">
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 text-center transition-all duration-300 hover:bg-white/20"
+                   [class]="'border border-' + currentTheme() + '-accent/20'">
+                
+                <div class="text-4xl mb-4">{{ service.icon }}</div>
+                <h3 class="text-2xl font-bold mb-4 transition-colors duration-300"
+                    [class]="'text-' + currentTheme() + '-secondary'">
+                  {{ service.title }}
+                </h3>
+                <p class="text-lg opacity-80 mb-6 transition-colors duration-300"
+                   [class]="'text-' + currentTheme() + '-secondary'">
+                  {{ service.description }}
+                </p>
+                
+                <ul class="space-y-2 text-left">
+                  <li *ngFor="let feature of service.features" 
+                      class="flex items-center space-x-2 transition-colors duration-300"
+                      [class]="'text-' + currentTheme() + '-secondary'">
+                    <span class="w-2 h-2 rounded-full"
+                          [class]="'bg-' + currentTheme() + '-accent'"></span>
+                    <span>{{ feature }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navegação do carrossel -->
+        <div class="flex justify-center items-center mt-8 space-x-4">
+          <button (click)="previousService()" 
+                  class="p-3 rounded-full transition-all duration-300 hover:scale-110"
+                  [class]="'bg-' + currentTheme() + '-accent/20 text-' + currentTheme() + '-secondary hover:bg-' + currentTheme() + '-accent/30'">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Indicadores -->
+          <div class="flex space-x-2">
+            <button *ngFor="let service of services; let i = index" 
+                    (click)="goToService(i)"
+                    class="w-3 h-3 rounded-full transition-all duration-300"
+                    [class]="i === currentServiceIndex() ? 
+                      'bg-' + currentTheme() + '-accent' : 
+                      'bg-' + currentTheme() + '-accent/30 hover:bg-' + currentTheme() + '-accent/50'">
+            </button>
+          </div>
+
+          <button (click)="nextService()" 
+                  class="p-3 rounded-full transition-all duration-300 hover:scale-110"
+                  [class]="'bg-' + currentTheme() + '-accent/20 text-' + currentTheme() + '-secondary hover:bg-' + currentTheme() + '-accent/30'">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 3 - Contactos -->
+  <section id="contactos" class="snap-section relative">
+    <!-- Background -->
+    <div class="absolute inset-0 transition-all duration-500"
+         [ngStyle]="{
+           background: 'linear-gradient(45deg, ' + 
+                      getThemeColor('primary') + ' 0%, ' + 
+                      getThemeColor('accent') + '20 100%)'
+         }">
+    </div>
+
+    <div class="relative z-10 h-full flex flex-col justify-between p-6">
+      <!-- Formulário de contacto -->
+      <div class="flex-1 flex items-center justify-center">
+        <div class="w-full max-w-2xl">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 transition-colors duration-300"
+                [class]="'text-' + currentTheme() + '-secondary'">
+              Entre em Contacto
+            </h2>
+            <p class="text-lg opacity-80 transition-colors duration-300"
+               [class]="'text-' + currentTheme() + '-secondary'">
+              Vamos conversar sobre seu próximo projeto
+            </p>
+          </div>
+
+          <form (ngSubmit)="submitContact()" #contactForm="ngForm" 
+                class="space-y-6">
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <input 
+                  [(ngModel)]="contactData.name"
+                  name="name"
+                  required
+                  placeholder="Seu nome"
+                  class="w-full p-4 rounded-xl border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+                  [class]="'bg-' + currentTheme() + '-secondary/10 border-' + currentTheme() + '-accent/30 text-' + currentTheme() + '-secondary placeholder-' + currentTheme() + '-secondary/60 focus:border-' + currentTheme() + '-accent focus:ring-' + currentTheme() + '-accent/20'">
+              </div>
+              
+              <div>
+                <input 
+                  [(ngModel)]="contactData.email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="Seu email"
+                  class="w-full p-4 rounded-xl border-2 transition-all duration-300 focus:outline-none focus:ring-2"
+                  [class]="'bg-' + currentTheme() + '-secondary/10 border-' + currentTheme() + '-accent/30 text-' + currentTheme() + '-secondary placeholder-' + currentTheme() + '-secondary/60 focus:border-' + currentTheme() + '-accent focus:ring-' + currentTheme() + '-accent/20'">
+              </div>
+            </div>
+
+            <div>
+              <textarea 
+                [(ngModel)]="contactData.message"
+                name="message"
+                required
+                rows="6"
+                placeholder="Sua mensagem"
+                class="w-full p-4 rounded-xl border-2 transition-all duration-300 resize-none focus:outline-none focus:ring-2"
+                [class]="'bg-' + currentTheme() + '-secondary/10 border-' + currentTheme() + '-accent/30 text-' + currentTheme() + '-secondary placeholder-' + currentTheme() + '-secondary/60 focus:border-' + currentTheme() + '-accent focus:ring-' + currentTheme() + '-accent/20'">
+              </textarea>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" 
+                      [disabled]="!contactForm.valid || isSubmitting()"
+                      class="px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      [class]="'bg-' + currentTheme() + '-accent text-white shadow-lg hover:shadow-xl'">
+                {{ isSubmitting() ? 'Enviando...' : 'Enviar Mensagem' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="text-center py-8 border-t"
+              [class]="'border-' + currentTheme() + '-accent/20'">
+        <div class="space-y-4">
+          <div class="text-2xl font-bold transition-colors duration-300"
+               [class]="'text-' + currentTheme() + '-secondary'">
+            BeWhy
+          </div>
+          <p class="opacity-80 transition-colors duration-300"
+             [class]="'text-' + currentTheme() + '-secondary'">
+            Transformando ideias em soluções digitais inovadoras
+          </p>
+          <div class="flex justify-center space-x-6">
+            <a href="#" class="transition-colors duration-300 hover:opacity-80"
+               [class]="'text-' + currentTheme() + '-secondary'">
+              LinkedIn
+            </a>
+            <a href="#" class="transition-colors duration-300 hover:opacity-80"
+               [class]="'text-' + currentTheme() + '-secondary'">
+              GitHub
+            </a>
+            <a href="#" class="transition-colors duration-300 hover:opacity-80"
+               [class]="'text-' + currentTheme() + '-secondary'">
+              Email
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+</main>
